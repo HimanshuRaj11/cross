@@ -5,7 +5,7 @@ import { InternalServerError } from "./handleError";
 
 interface DecodedToken {
     _id: string;
-    key: any;
+    key: string;
 }
 
 export const verifyUser = async (): Promise<string | NextResponse> => {

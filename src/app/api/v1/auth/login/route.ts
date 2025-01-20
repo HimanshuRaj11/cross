@@ -31,7 +31,7 @@ export async function POST(request: Request) {
         const tokenData: ITokenData = {
             _id: user?._id
         };
-        const validPassword = bcryptjs.compareSync(password, user?.password as any)
+        const validPassword = bcryptjs.compareSync(password, user?.password as string)
         if (!validPassword) {
             return NextResponse.json({ message: "Invalid Cridentials!", error: true }, { status: 400 })
         }

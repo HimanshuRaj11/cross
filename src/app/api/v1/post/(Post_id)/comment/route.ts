@@ -20,6 +20,6 @@ export async function POST(request: Request) {
         const post = await Post.findOneAndUpdate({ _id: Post_id }, { $push: { comments: comment._id } }, { returnDocument: "after" })
         return NextResponse.json({ message: "Comment Done", post, success: true }, { status: 201 })
     } catch (error) {
-        return NextResponse.json(InternalServerError(error))
+        return NextResponse.json(InternalServerError(error as Error))
     }
 }

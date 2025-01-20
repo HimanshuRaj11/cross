@@ -15,7 +15,7 @@ export interface Ifile {
     bytes: number;
     type: string;
     etag: string;
-    placeholder: Boolean;
+    placeholder: boolean;
     url: string;
     secure_url: string;
     folder: string;

@@ -2,6 +2,7 @@ import { InternalServerError } from "@/lib/handleError";
 import { NextResponse } from "next/server";
 import { verifyUser } from "@/lib/verifyuser";
 import Reply from "@/models/reply.model";
+import { Schema } from "mongoose";
 
 export async function POST(request: Request) {
     try {
@@ -10,7 +11,7 @@ export async function POST(request: Request) {
         const { replies } = await request.json();
 
         const RepliesList: any[] = []
-        await Promise.all(replies.map(async (replyId: any) => {
+        await Promise.all(replies.map(async (replyId: Schema.Types.ObjectId) => {
 
             const reply = await Reply.findById({ _id: replyId })
                 .populate({
@@ -31,7 +32,7 @@ export async function POST(request: Request) {
 
         return NextResponse.json({ RepliesList })
     } catch (error) {
-        return NextResponse.json(InternalServerError(error))
+        return NextResponse.json(InternalServerError(error as Error))
     }
 }
 

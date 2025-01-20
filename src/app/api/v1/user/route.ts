@@ -3,7 +3,7 @@ import { verifyUser } from "@/lib/verifyuser";
 import User from "@/models/user.model";
 import { NextResponse } from "next/server";
 
-export async function GET(request: Request) {
+export async function GET() {
     try {
         const user_id = await verifyUser()
         if (!user_id) return
@@ -12,6 +12,6 @@ export async function GET(request: Request) {
         return response;
 
     } catch (error) {
-        return NextResponse.json(InternalServerError(error))
+        return NextResponse.json(InternalServerError(error as Error))
     }
 }

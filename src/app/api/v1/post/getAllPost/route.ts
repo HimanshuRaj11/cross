@@ -3,7 +3,7 @@ import Post from "@/models/post.model";
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/db";
 
-export async function GET(request: Request) {
+export async function GET() {
     try {
         await connectDB()
         const posts = await Post.find().sort({ createdAt: -1 })
@@ -19,9 +19,7 @@ export async function GET(request: Request) {
 
         return NextResponse.json({ message: "Post Fetched", posts })
     } catch (error) {
-        console.log(error);
-
-        return NextResponse.json(InternalServerError(error))
+        return NextResponse.json(InternalServerError(error as Error))
 
     }
 }

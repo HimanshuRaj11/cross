@@ -16,7 +16,6 @@ const PostSlice = createSlice({
     name: "Post",
     initialState: {
         Posts: [],
-        error: null,
         loading: false,
     },
     reducers: {},
@@ -29,9 +28,8 @@ const PostSlice = createSlice({
                 state.loading = false;
                 state.Posts = action.payload;
             })
-            .addCase(fetchPost.rejected, (state, action) => {
+            .addCase(fetchPost.rejected, (state) => {
                 state.loading = false;
-                state.error = action.error.message as any;
             });
     }
 });
