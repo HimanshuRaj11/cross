@@ -12,12 +12,17 @@ const banner = "https://wallpapers.com/images/hd/cyber-background-tp8xgh7o6vfh5k
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 import moment from 'moment';
 import UserPostscard from '@/components/UserPostscard';
+import { IUser } from '@/models/user.model';
+import { Schema } from 'mongoose';
+import { IPost } from '@/models/post.model';
 
 
 
 
 const ProfilePage: React.FC = () => {
-    const { User: { user } } = useSelector((state: any) => state.User);
+    // const { User: { user } } = useSelector((state: { User: { user: IUser } }) => state.User);
+    const { user } = useSelector((state: { user: IUser }) => state);
+
     const [activeTab, setActiveTab] = useState('Posts');
 
     const pathname = usePathname()
@@ -33,7 +38,7 @@ const ProfilePage: React.FC = () => {
     const posts = PathUser?.posts
 
 
-    const savedPosts = PathUser?.savedPost
+    // const savedPosts = PathUser?.savedPost
 
     const aboutData = {
         email: "",
@@ -49,7 +54,7 @@ const ProfilePage: React.FC = () => {
             throw error
         }
     }
-    const followhandler = async (fllowUserId: any) => {
+    const followhandler = async (fllowUserId: Schema.Types.ObjectId) => {
         try {
 
             await axios.post(`${baseUrl}/api/v1/user/follow`, { fllowUserId })
@@ -59,7 +64,7 @@ const ProfilePage: React.FC = () => {
             return error
         }
     }
-    const unfollowhandler = async (unfllowUserId: any) => {
+    const unfollowhandler = async (unfllowUserId: Schema.Types.ObjectId) => {
         try {
 
             await axios.post(`${baseUrl}/api/v1/user/unfollow`, { unfllowUserId })
@@ -156,7 +161,7 @@ const ProfilePage: React.FC = () => {
                 {activeTab === 'Posts' && (
                     <div className="flex justify-center flex-wrap">
                         {
-                            posts?.map((post: any) => <UserPostscard key={post._id} post={post} />)
+                            posts?.map((post: IPost, i: number) => <UserPostscard key={i} post={post} />)
 
                         }
                     </div>

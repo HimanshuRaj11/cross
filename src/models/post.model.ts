@@ -23,6 +23,7 @@ export interface Ifile {
 }
 
 export interface IPost {
+    _id: Schema.Types.ObjectId;
     user: Schema.Types.ObjectId[];
     files?: Ifile;
     caption?: string;
