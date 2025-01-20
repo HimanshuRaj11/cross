@@ -3,23 +3,23 @@ import { Schema, model, models, Model } from 'mongoose';
 
 export interface Ifile {
     public_id: string;
-    asset_id: String;
+    asset_id: string;
     version: Number;
-    version_id: String;
-    signature: String;
+    version_id: string;
+    signature: string;
     width: Number;
     height: Number;
-    format: String;
-    resource_type: String;
-    created_at: String;
+    format: string;
+    resource_type: string;
+    created_at: string;
     bytes: Number;
-    type: String;
-    etag: String;
+    type: string;
+    etag: string;
     placeholder: Boolean;
-    url: String;
-    secure_url: String;
-    folder: String;
-    api_key: String;
+    url: string;
+    secure_url: string;
+    folder: string;
+    api_key: string;
 }
 
 export interface IPost {

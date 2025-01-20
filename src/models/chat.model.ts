@@ -1,5 +1,5 @@
 
-import mongoose, { Schema, Model, Models, models, model } from "mongoose";
+import mongoose, { Schema, Model, models, model } from "mongoose";
 
 export interface IChat {
     messages: Schema.Types.ObjectId,

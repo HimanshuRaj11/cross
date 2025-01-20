@@ -1,7 +1,7 @@
 // components/UserCard.js
 import React from 'react';
 
-const UserCard = ({ user }: { user: any }) => {
+const UserCard = ({ user }) => {
 
     return (
         <div className="p-4 bg-white rounded-lg shadow-md hover:shadow-lg transform hover:scale-105 transition duration-300">
