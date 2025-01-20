@@ -7,15 +7,14 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
     try {
-        const user_id = await verifyUser()
-        if (!user_id) return
+        const user_id = await verifyUser();
+        if (!user_id) return;
         const { Post_id } = await request.json();
 
-        await User.findOneAndUpdate({ _id: user_id }, { $addToSet: { savedPost: Post_id } })
+        await User.findOneAndUpdate({ _id: user_id }, { $addToSet: { savedPost: Post_id } });
 
-        return NextResponse.json({ message: "Post saved", success: true }, { status: 200 })
+        return NextResponse.json({ message: "Post saved", success: true }, { status: 200 });
     } catch (error) {
-        return NextResponse.json(InternalServerError(error as Error);
-        ))
+        return NextResponse.json(InternalServerError(error as Error), { status: 500 });
     }
 }
