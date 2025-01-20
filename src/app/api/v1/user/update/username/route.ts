@@ -18,6 +18,6 @@ export async function POST(request: Request) {
         await user.save();
         return NextResponse.json({ message: "username Updated Successfull", success: true }, { status: 200 })
     } catch (error) {
-        return NextResponse.json(InternalServerError(error))
+        return NextResponse.json(InternalServerError(error as Error))
     }
 }
