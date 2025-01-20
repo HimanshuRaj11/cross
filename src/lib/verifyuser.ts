@@ -22,7 +22,7 @@ export const verifyUser = async (): Promise<string | NextResponse> => {
             return NextResponse.json({ message: "User Not verified!!!" }, { status: 401 });
         }
         return decodedToken._id;
-    } catch (error: any) {
-        return NextResponse.json(InternalServerError(error))
+    } catch (error) {
+        return NextResponse.json(InternalServerError(error as Error))
     }
 };

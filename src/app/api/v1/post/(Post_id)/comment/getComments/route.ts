@@ -3,6 +3,7 @@
 import { InternalServerError } from "@/lib/handleError";
 import { verifyUser } from "@/lib/verifyuser";
 import Comment from "@/models/comment.model";
+import { Schema } from "mongoose";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
@@ -12,7 +13,7 @@ export async function POST(request: Request) {
         const { comment_id } = await request.json();
 
         let commentsList: any[] = [];
-        await Promise.all(comment_id.map(async (comment_id: any) => {
+        await Promise.all(comment_id.map(async (comment_id: Schema.Types.ObjectId) => {
             const comment = await Comment.findById({ _id: comment_id }).populate({
                 path: "user",
                 select: "_id username name profilePic"
@@ -21,6 +22,6 @@ export async function POST(request: Request) {
         }));
         return NextResponse.json({ message: "comments fetched", commentsList, success: true }, { status: 200 })
     } catch (error) {
-        return NextResponse.json(InternalServerError(error))
+        return NextResponse.json(InternalServerError(error as Error))
     }
 }

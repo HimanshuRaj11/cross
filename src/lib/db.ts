@@ -1,20 +1,16 @@
 
 import mongoose from "mongoose";
 
-const connectDB = async (): Promise<void> => {
+const connectDB = async (): Promise<string> => {
     try {
-        await mongoose.connect(process.env.MONGODB_URI as string)
-            .then(() => {
-                console.log(`Database Connected`);
-                return "Database Connected"
-            })
-            .catch((error: Error) => {
-                console.log(error.message);
-                return error.message
-            })
-    } catch (error: any) {
-        console.log(error.message);
-        return error.message
+        await mongoose.connect(process.env.MONGODB_URI as string);
+        console.log(`Database Connected`);
+        return "Database Connected";
+    } catch (error) {
+        if (error instanceof Error) {
+            return error.message;
+        }
+        return "Unknown error occurred";
     }
 }
 
