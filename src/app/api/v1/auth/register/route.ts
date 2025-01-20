@@ -62,6 +62,6 @@ export async function POST(request: Request) {
 
         return response;
     } catch (error) {
-        return NextResponse.json(InternalServerError(error))
+        return NextResponse.json(InternalServerError(error as Error))
     }
 }

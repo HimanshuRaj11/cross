@@ -16,6 +16,6 @@ export async function GET(request: Request) {
 
         return NextResponse.json({ message: "", messages: chat?.messages, success: true }, { status: 200 })
     } catch (error) {
-        return NextResponse.json(InternalServerError(error))
+        return NextResponse.json(InternalServerError(error as Error))
     }
 }

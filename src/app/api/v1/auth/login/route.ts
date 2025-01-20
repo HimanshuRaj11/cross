@@ -1,5 +1,5 @@
 import connectDB from "@/lib/db";
-import User, { IUser } from "@/models/user.model";
+import User from "@/models/user.model";
 import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken"
@@ -46,6 +46,6 @@ export async function POST(request: Request) {
         })
         return response
     } catch (error) {
-        return NextResponse.json(InternalServerError(error))
+        return NextResponse.json(InternalServerError(error as Error))
     }
 }
