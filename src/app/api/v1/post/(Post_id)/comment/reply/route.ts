@@ -15,7 +15,7 @@ export async function POST(request: Request) {
         const comment = await Comment.findOneAndUpdate(
             { _id: comment_id },
             {
-                $push: { replies: (NewReply as any)._id }
+                $push: { replies: (NewReply)._id }
             },
             { returnDocument: "after" }
         );
