@@ -38,9 +38,9 @@ export async function POST(request: Request) {
             location,
         });
 
-        const user = await User.findOneAndUpdate(
+        await User.findOneAndUpdate(
             { _id: user_Id },
-            { $push: { posts: (newPost as any)._id } }
+            { $push: { posts: (newPost)._id } }
         );
 
         return NextResponse.json({ message: "Post Created Successful", success: true }, { status: 201 })
