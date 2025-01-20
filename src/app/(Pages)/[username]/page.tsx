@@ -1,7 +1,6 @@
 // pages/profile.tsx
 "use client"
 import AboutSection from '@/components/AboutSection';
-import Posts from '@/components/Posts';
 import Tabs from '@/components/Tabs';
 import axios from 'axios';
 import { usePathname } from 'next/navigation';
@@ -13,8 +12,7 @@ const banner = "https://wallpapers.com/images/hd/cyber-background-tp8xgh7o6vfh5k
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 import moment from 'moment';
 import UserPostscard from '@/components/UserPostscard';
-import { Number } from 'mongoose';
-import PostCard from '@/components/PostsCard';
+
 
 
 

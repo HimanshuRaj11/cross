@@ -1,7 +1,7 @@
 // components/PostCard.tsx
 "use client"
 import React, { useState } from 'react';
-import { FaThumbsUp, FaComment, FaShareAlt, FaPaperPlane, FaMusic, FaBookmark, FaLess } from 'react-icons/fa';
+import { FaThumbsUp, FaComment, FaShareAlt, FaMusic, FaBookmark } from 'react-icons/fa';
 import { HiDotsVertical } from 'react-icons/hi';
 import { useSelector } from 'react-redux';
 import { BiUserPlus } from "react-icons/bi";

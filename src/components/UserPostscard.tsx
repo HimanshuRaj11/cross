@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React from 'react';
 import { FaThumbsUp, FaComment, FaShareAlt } from 'react-icons/fa';
 import axios from 'axios';
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL

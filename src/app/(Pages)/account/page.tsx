@@ -1,18 +1,14 @@
 // pages/profile.tsx
 "use client"
 import AboutSection from '@/components/AboutSection';
-import EditUserDetails from '@/components/EditUserDetails';
 import Posts from '@/components/Posts';
-import PostCard from '@/components/PostsCard';
 import Tabs from '@/components/Tabs';
 import UserDetails from '@/components/UserDetails';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 
 const ProfilePage: React.FC = () => {
     const [activeTab, setActiveTab] = useState('Posts');
 
-    const { User: { user } } = useSelector((state: any) => state.User);
 
     const posts = [
         {

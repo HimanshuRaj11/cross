@@ -6,7 +6,7 @@ interface TabsProps {
     onTabChange: (tab: string) => void;
 }
 
-const Tabs = ({ activeTab, onTabChange }) => {
+const Tabs = ({ activeTab, onTabChange }: TabsProps) => {
     return (
         <div className="flex justify-center mt-6">
             {['Posts', 'About'].map((tab) => (

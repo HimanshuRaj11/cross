@@ -35,7 +35,7 @@ const EditUserDetails = ({
     isFollowing,
     onFollowToggle,
     onMessage,
-}) => {
+}: UserDetailsProps) => {
     const [editableData, setEditableData] = useState({
         bannerUrl,
         profilePictureUrl,

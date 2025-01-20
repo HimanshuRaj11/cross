@@ -1,8 +1,6 @@
 "use client"
-import PostCard from "@/components/PostsCard";
 import RightSidebar from "@/components/RightSidebar";
 import StorySlider from "@/components/StoryLine";
-import Image from "next/image";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { fetchPost } from "./Redux/slice/PostSlice";

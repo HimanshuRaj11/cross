@@ -1,5 +1,5 @@
 
-import mongoose, { Schema, model, models, Model, Document } from 'mongoose';
+import { Schema, model, models, Model } from 'mongoose';
 
 export interface Ifile {
     public_id: string;

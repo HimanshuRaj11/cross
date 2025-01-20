@@ -1,8 +1,6 @@
 import { InternalServerError } from "@/lib/handleError";
 import { NextResponse } from "next/server";
 import { verifyUser } from "@/lib/verifyuser";
-import Comment from "@/models/comment.model";
-import { promises } from "dns";
 import Reply from "@/models/reply.model";
 
 export async function POST(request: Request) {

@@ -1,7 +1,6 @@
 import { InternalServerError } from "@/lib/handleError";
 import { verifyUser } from "@/lib/verifyuser";
 import Chat from "@/models/chat.model";
-import Message from "@/models/message.model";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {

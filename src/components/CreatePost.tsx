@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { FaFileUpload } from 'react-icons/fa';
 import { FiPlusCircle } from "react-icons/fi";
 import {
     Carousel,

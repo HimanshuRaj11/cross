@@ -1,11 +1,9 @@
 // Update The Post
 
-import cloudinary from "@/lib/cloudinary";
-import connectDB from "@/lib/db";
+
 import { InternalServerError } from "@/lib/handleError";
 import { verifyUser } from "@/lib/verifyuser";
-import Post, { IPost } from "@/models/post.model";
-import User from "@/models/user.model";
+import Post from "@/models/post.model";
 import { NextResponse } from "next/server";
 
 
