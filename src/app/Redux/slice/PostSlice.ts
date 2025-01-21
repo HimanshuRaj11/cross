@@ -5,6 +5,10 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
 export const fetchPost = createAsyncThunk("fetchPost", async () => {
     try {
+        console.log(`${baseUrl}/api/v1/post/getAllPost`);
+        console.log(baseUrl);
+
+
         const { data } = await axios.get(`${baseUrl}/api/v1/post/getAllPost`, { withCredentials: true })
 
         return data

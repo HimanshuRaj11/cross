@@ -1,7 +1,6 @@
 "use client"
 import { Fetchuser } from '@/app/Redux/slice/userSlice';
 import { useGlobalContext } from '@/context/contextProvider';
-import { IUser } from '@/models/user.model';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { FaEye, FaEyeSlash, FaSignInAlt } from 'react-icons/fa';
