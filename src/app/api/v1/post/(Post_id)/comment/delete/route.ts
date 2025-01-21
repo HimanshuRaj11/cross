@@ -16,6 +16,6 @@ export async function POST(request: Request) {
         await Post.findOneAndUpdate({ _id: Post_id }, { $pull: { comments: comment_id } })
         return NextResponse.json({ message: "comment deleted success", comment, success: true }, { status: 200 })
     } catch (error) {
-        return NextResponse.json(InternalServerError(error))
+        return NextResponse.json(InternalServerError(error as Error))
     }
 }

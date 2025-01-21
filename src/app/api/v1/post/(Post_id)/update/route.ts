@@ -39,6 +39,6 @@ export async function POST(request: Request) {
 
         return NextResponse.json({ message: "Post Created Successful", UpdatePost, success: true }, { status: 201 })
     } catch (error) {
-        return NextResponse.json(InternalServerError(error))
+        return NextResponse.json(InternalServerError(error as Error))
     }
 }

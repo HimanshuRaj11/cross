@@ -21,6 +21,6 @@ export async function POST(request: Request) {
         const Response = NextResponse.json({ message: "Post Delete Successful", success: true }, { status: 200 })
         return Response
     } catch (error) {
-        return NextResponse.json(InternalServerError(error))
+        return NextResponse.json(InternalServerError(error as Error))
     }
 }
