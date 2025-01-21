@@ -9,7 +9,7 @@ import { IUser } from '@/models/user.model';
 const avatarUrl = "https://www.svgrepo.com/show/327465/person-circle.svg"
 const banner = "https://wallpapers.com/images/hd/cyber-background-tp8xgh7o6vfh5kb8.jpg"
 const ProfileCard = () => {
-    const { user } = useSelector((state: { user: IUser }) => state);
+    const { User: { user } } = useSelector((state: any) => state.User);
 
     return (
         <div className=" max-w-sm mx-auto bg-white shadow-lg rounded-lg overflow-hidden">

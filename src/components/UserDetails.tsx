@@ -13,7 +13,7 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
 
 const UserDetails = () => {
-    const { user } = useSelector((state: { user: IUser }) => state);
+    const { User: { user } } = useSelector((state: any) => state.User);
 
     const pathname = usePathname()
     const [PathUser, setPathUser] = useState<any>({})

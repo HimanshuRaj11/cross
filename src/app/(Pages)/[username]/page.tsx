@@ -20,8 +20,8 @@ import { IPost } from '@/models/post.model';
 
 
 const ProfilePage: React.FC = () => {
-    // const { User: { user } } = useSelector((state: { User: { user: IUser } }) => state.User);
-    const { user } = useSelector((state: { user: IUser }) => state);
+    const { User: { user } } = useSelector((state: any) => state.User);
+
 
     const [activeTab, setActiveTab] = useState('Posts');
 

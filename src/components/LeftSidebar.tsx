@@ -13,7 +13,8 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
 export default function LeftSidebar() {
     const dispatch = useDispatch();
-    const { user } = useSelector((state: { user: IUser }) => state);
+    const { User: { user } } = useSelector((state: any) => state.User);
+
 
     const { setSearch, setPopover, setNotificationPop, setCreatePostBtn, setLoginBtn, setRegisterBtn } = useGlobalContext()
 

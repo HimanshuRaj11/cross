@@ -17,7 +17,8 @@ import { IUser } from '@/models/user.model';
 import { Schema } from 'mongoose';
 import { Ifile, IPost } from '@/models/post.model';
 function UserPostscard({ post }: { post: IPost }) {
-    const { user } = useSelector((state: { user: IUser }) => state);
+    const { User: { user } } = useSelector((state: any) => state.User);
+
     const FileLength = Array.isArray(post?.files) ? post.files.length : 0;
     const liked = post?.likes?.includes(user?._id);
     const likeOrDislikeHandler = async (Post_id: Schema.Types.ObjectId) => {

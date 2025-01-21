@@ -38,7 +38,7 @@ const PostCard = ({ post }: { post: IPostExt }) => {
         setRegisterBtn(false)
     };
 
-    const { user } = useSelector((state: { user: IUser }) => state);
+    const { User: { user } } = useSelector((state: any) => state.User);
 
     const FileLength = Array.isArray(post?.files) ? post?.files.length : 0
 
