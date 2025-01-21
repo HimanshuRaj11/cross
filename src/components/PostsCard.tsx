@@ -27,7 +27,7 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
 
 
-const PostCard = ({ post }: { post: IPostExt }) => {
+const PostCard = ({ post }: { post: any }) => {
     const { setSearch, setPopover, setNotificationPop, setCreatePostBtn, setLoginBtn, setRegisterBtn } = useGlobalContext()
     const handleLoginClick = () => {
         setPopover(true)
