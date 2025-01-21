@@ -9,12 +9,6 @@ import { IUser } from '@/models/user.model';
 import axios from 'axios';
 
 
-const suggestedUsers = [
-    {
-        _id: "1",
-        name: "a1"
-    },
-];
 
 const suggestedGames = [
     {

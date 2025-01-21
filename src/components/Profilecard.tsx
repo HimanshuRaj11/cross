@@ -4,7 +4,6 @@ import React from 'react';
 import { Button } from './ui/button';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
-import { IUser } from '@/models/user.model';
 
 const avatarUrl = "https://www.svgrepo.com/show/327465/person-circle.svg"
 const banner = "https://wallpapers.com/images/hd/cyber-background-tp8xgh7o6vfh5kb8.jpg"
