@@ -2,7 +2,7 @@ import { InternalServerError } from "@/lib/handleError";
 import User from "@/models/user.model";
 import { NextResponse } from "next/server";
 
-export async function GET({ params }: { params: { username: string } }) {
+export async function GET(requesr: Request, { params }: { params: { username: string } }) {
     try {
         const { username } = await params;
         const user = await User.findOne({ username })
