@@ -25,13 +25,11 @@ const stories = [
   // Add more stories as needed
 ];
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
 
 export default function Home() {
   const dispatch = useDispatch();
-  console.log(`${baseUrl}/api/v1/post/getAllPost`);
-  console.log(baseUrl);
+
   useEffect(() => {
     dispatch(fetchPost() as any)
   }, [])
