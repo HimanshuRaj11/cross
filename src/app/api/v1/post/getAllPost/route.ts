@@ -11,12 +11,6 @@ export async function GET() {
                 path: "user",
                 select: "_id username name profilePic"
             })
-        // .populate({
-        //     path: "comments",
-        //     select: "_id Comment user createdAt"
-        // })
-
-
         return NextResponse.json({ message: "Post Fetched", posts })
     } catch (error) {
         return NextResponse.json(InternalServerError(error as Error))

@@ -37,7 +37,6 @@ const PostCard = ({ post }: { post: IPostExt }) => {
         setCreatePostBtn(false)
         setRegisterBtn(false)
     };
-    console.log(post);
 
     const { user } = useSelector((state: { user: IUser }) => state);
 
