@@ -1,10 +1,11 @@
 import { Schema, model, models, Model } from 'mongoose';
 
-interface IComment {
+export interface IComment {
     user: Schema.Types.ObjectId,
     Comment: string,
     likes?: [Schema.Types.ObjectId],
     replies?: [Schema.Types.ObjectId]
+    _id: Schema.Types.ObjectId
 }
 
 const CommentSchema = new Schema({

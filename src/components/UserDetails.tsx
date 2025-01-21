@@ -6,13 +6,15 @@ import { Button } from './ui/button';
 import { useSelector } from 'react-redux';
 import { usePathname } from 'next/navigation';
 import axios from 'axios';
+import { IUser } from '@/models/user.model';
 const avatarUrl = "https://www.svgrepo.com/show/327465/person-circle.svg"
 const banner = "https://wallpapers.com/images/hd/cyber-background-tp8xgh7o6vfh5kb8.jpg"
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
 
 const UserDetails = () => {
-    const { User: { user } } = useSelector((state: any) => state.User);
+    const { user } = useSelector((state: { user: IUser }) => state);
+
     const pathname = usePathname()
     const [PathUser, setPathUser] = useState<any>({})
 
@@ -37,9 +39,9 @@ const UserDetails = () => {
     return (
         <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden mt-4">
             <div className="relative">
-                <img src={user?.banner ? user?.banner : banner} alt="Banner" className="w-full h-48 object-cover" />
+                <img src={user?.banner?.file ? user?.banner.file : banner} alt="Banner" className="w-full h-48 object-cover" />
                 <img
-                    src={user?.profilePic ? user?.profilePic : avatarUrl}
+                    src={user?.profilePic?.file ? user?.profilePic.file : avatarUrl}
                     alt="Profile"
                     className="w-32 h-32 rounded-full border-4 border-white absolute left-1/2 transform -translate-x-1/2 -bottom-16"
                 />
@@ -89,9 +91,9 @@ const UserDetails = () => {
                 </div>
                 <div className="mt-4 text-center text-gray-600">
                     <p>📍 {location}</p>
-                    <p>📅 Joined {user?.createdAt}</p>
+                    {/* <p>📅 Joined {user?.createdAt}</p> */}
                     <p>
-                        🔗 <a href={user?.website} className="text-blue-500 hover:underline">{user?.website}</a>
+                        {/* 🔗 <a href={user?.website} className="text-blue-500 hover:underline">{user?.website}</a> */}
                     </p>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { ReactEventHandler, useState } from 'react';
 
 type ResultType = 'post' | 'reel' | 'user';
 
@@ -19,12 +19,12 @@ function Searchbox() {
     const [query, setQuery] = useState('');
     const [results, setResults] = useState<Result[]>([]);
 
-    const handleChange = (e: any) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
-        setQuery(value)
+        setQuery(value);
 
         const filteredResults = mockResults.filter(result =>
-            result.content.toLowerCase().includes(query.toLowerCase())
+            result.content.toLowerCase().includes(value.toLowerCase())
         );
         setResults(filteredResults);
     };

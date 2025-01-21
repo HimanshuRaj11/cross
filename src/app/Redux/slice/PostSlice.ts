@@ -6,11 +6,13 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 export const fetchPost = createAsyncThunk("fetchPost", async () => {
     try {
         const { data } = await axios.get(`${baseUrl}/api/v1/post/getAllPost`, { withCredentials: true })
+
         return data
     } catch (error) {
         return error
     }
 })
+
 
 const PostSlice = createSlice({
     name: "Post",

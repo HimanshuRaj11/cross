@@ -1,6 +1,7 @@
 "use client"
 import { Fetchuser } from '@/app/Redux/slice/userSlice';
 import { useGlobalContext } from '@/context/contextProvider';
+import { IUser } from '@/models/user.model';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { FaEye, FaEyeSlash, FaSignInAlt } from 'react-icons/fa';
@@ -28,16 +29,22 @@ function Login() {
         username: "",
         password: ""
     })
-    const handleChange = (e: any) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setLoginData((preVal) => {
             return { ...preVal, [name]: value };
         });
     }
+    interface UserI {
+        id: number;
+        name: string;
+        email: string;
+    }
+
     const handleSubmit = async () => {
         try {
 
-            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/auth/login`, { LoginData }, { withCredentials: true })
+            await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/auth/login`, { LoginData }, { withCredentials: true })
             dispatch(Fetchuser() as any)
             setPopover(false)
             setLoginBtn(false)

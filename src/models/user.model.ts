@@ -34,6 +34,7 @@ export interface IUser extends Document {
     followers: mongoose.Schema.Types.ObjectId[];
     followings: mongoose.Schema.Types.ObjectId[];
     savedPost: mongoose.Schema.Types.ObjectId[];
+    createdAt: Date
 }
 
 const countryCodes: Record<string, string> = {
@@ -148,5 +149,5 @@ const UserSchema = new Schema<IUser>({
     }]
 }, { timestamps: true });
 
-const User: Model<IUser> = models.User || model('User', UserSchema);
+const User: Model<IUser & Document> = models.User || model<IUser & Document>('User', UserSchema);
 export default User;

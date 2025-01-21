@@ -1,5 +1,7 @@
+import { IUser } from '@/models/user.model';
 
-import { Schema, model, models, Model } from 'mongoose';
+import { Schema, model, models, Model, Document } from 'mongoose';
+import { IComment } from './comment.model';
 
 export interface Ifile {
     public_id: string;
@@ -24,8 +26,8 @@ export interface Ifile {
 
 export interface IPost {
     _id: Schema.Types.ObjectId;
-    user: Schema.Types.ObjectId[];
-    files?: Ifile;
+    user: Schema.Types.ObjectId;
+    files?: Ifile[];
     caption?: string;
     location?: string;
     colabWith?: Schema.Types.ObjectId[];
@@ -35,6 +37,22 @@ export interface IPost {
     likes?: Schema.Types.ObjectId[];
     comments?: Schema.Types.ObjectId[];
     views?: Schema.Types.ObjectId[];
+    createdAt: Date | string;
+}
+export interface IPostExt {
+    _id: Schema.Types.ObjectId;
+    user: IUser;
+    files?: Ifile[];
+    caption?: string;
+    location?: string;
+    colabWith?: IUser[];
+    tags?: string[];
+    tagPeople?: IUser[];
+    music?: string;
+    likes?: Schema.Types.ObjectId[];
+    comments?: Schema.Types.ObjectId[];
+    views?: IUser[];
+    createdAt: Date;
 }
 
 const file = {
@@ -100,7 +118,7 @@ const PostSchema = new Schema({
     }]
 }, { timestamps: true })
 
-const Post: Model<IPost> = models.Post || model("Post", PostSchema)
+const Post: Model<IPost & Document> = models.Post || model("Post", PostSchema)
 
 export default Post;
 

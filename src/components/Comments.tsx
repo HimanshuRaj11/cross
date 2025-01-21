@@ -1,3 +1,4 @@
+import { IUser } from "@/models/user.model";
 import axios from "axios";
 import Link from "next/link";
 import { useState } from "react";
@@ -8,7 +9,7 @@ const avatarUrl = "https://www.svgrepo.com/show/327465/person-circle.svg"
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
 export const CommentsBox = ({ post, Comments }: { post: any, Comments: any }) => {
-    const { User: { user } } = useSelector((state: any) => state.User);
+    const { user } = useSelector((state: { user: IUser }) => state);
     const [InputComment, setInputComment] = useState("")
     const [ReplyInputActive, setReplyInputActive] = useState(false)
 

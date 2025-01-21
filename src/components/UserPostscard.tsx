@@ -13,11 +13,14 @@ import {
     CarouselPrevious,
 } from "./ui/carousel"
 import { useSelector } from 'react-redux';
-function UserPostscard({ post }: { post: any }) {
-    const { User: { user } } = useSelector((state: any) => state.User);
-    const FileLength = post?.files.length
-    const liked = post.likes.includes(user?._id);
-    const likeOrDislikeHandler = async (Post_id: any) => {
+import { IUser } from '@/models/user.model';
+import { Schema } from 'mongoose';
+import { Ifile, IPost } from '@/models/post.model';
+function UserPostscard({ post }: { post: IPost }) {
+    const { user } = useSelector((state: { user: IUser }) => state);
+    const FileLength = Array.isArray(post?.files) ? post.files.length : 0;
+    const liked = post?.likes?.includes(user?._id);
+    const likeOrDislikeHandler = async (Post_id: Schema.Types.ObjectId) => {
         try {
             const action = liked ? 'dislike' : 'like';
 
@@ -33,7 +36,7 @@ function UserPostscard({ post }: { post: any }) {
 
 
             <div className="px-4 py-2">
-                <p className="text-gray-700 text-sm">{post?.content}</p>
+                <p className="text-gray-700 text-sm">{post?.caption}</p>
                 <p className="text-gray-700 text-sm">{post?.location}</p>
             </div>
 
@@ -43,7 +46,7 @@ function UserPostscard({ post }: { post: any }) {
                     <CarouselContent>
 
                         {
-                            post?.files?.map((file: any, index: number) => {
+                            post?.files?.map((file: Ifile, index: number) => {
                                 return (
                                     <CarouselItem key={index} >
                                         <div className="p-4 flex justify-center ">
@@ -80,12 +83,12 @@ function UserPostscard({ post }: { post: any }) {
                 <div className="flex items-center">
                     <button onClick={() => likeOrDislikeHandler(post._id)} className={`flex items-center  hover:text-blue-500 ${liked ? "text-blue-500" : "text-gray-600"}`}>
                         <FaThumbsUp className="w-5 h-5 mr-1" />
-                        <span>{post?.likes.length}</span>
+                        <span>{Array.isArray(post?.likes) ? post?.likes.length : 0}</span>
                     </button>
 
                     <button className="flex items-center ml-4 text-gray-600 hover:text-blue-500">
                         <FaComment className="w-5 h-5 mr-1" />
-                        <span>{post?.comments.length}</span>
+                        <span>{Array.isArray(post?.comments) ? post?.comments.length : 0}</span>
                     </button>
                 </div>
 

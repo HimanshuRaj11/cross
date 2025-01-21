@@ -6,13 +6,15 @@ import { useGlobalContext } from '@/context/contextProvider';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { Fetchuser } from '@/app/Redux/slice/userSlice';
+import { IUser } from '@/models/user.model';
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
 
 
 export default function LeftSidebar() {
     const dispatch = useDispatch();
-    const { User: { user } } = useSelector((state: any) => state.User);
+    const { user } = useSelector((state: { user: IUser }) => state);
+
     const { setSearch, setPopover, setNotificationPop, setCreatePostBtn, setLoginBtn, setRegisterBtn } = useGlobalContext()
 
     const handleSearchClick = () => {

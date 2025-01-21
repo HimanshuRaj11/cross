@@ -17,14 +17,17 @@ import Link from 'next/link';
 import axios from 'axios';
 import { useGlobalContext } from '@/context/contextProvider';
 import { ImLocation2 } from 'react-icons/im';
-import { toast } from 'react-toastify';
 import { CommentsBox } from './Comments';
+import { IUser } from '@/models/user.model';
+import { Schema } from 'mongoose';
+import { Ifile, IPostExt } from '@/models/post.model';
+import { toast } from 'react-toastify';
 const avatarUrl = "https://www.svgrepo.com/show/327465/person-circle.svg"
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
 
 
-const PostCard = ({ post }: { post: any }) => {
+const PostCard = ({ post }: { post: IPostExt }) => {
     const { setSearch, setPopover, setNotificationPop, setCreatePostBtn, setLoginBtn, setRegisterBtn } = useGlobalContext()
     const handleLoginClick = () => {
         setPopover(true)
@@ -34,14 +37,17 @@ const PostCard = ({ post }: { post: any }) => {
         setCreatePostBtn(false)
         setRegisterBtn(false)
     };
-    const { User: { user } } = useSelector((state: any) => state.User);
-    const FileLength = post?.files.length
+    console.log(post);
 
-    const followed = user?.followings?.includes(post.user._id) || post.user._id == user?._id
+    const { user } = useSelector((state: { user: IUser }) => state);
+
+    const FileLength = Array.isArray(post?.files) ? post?.files.length : 0
+
+    const followed = user?.followings?.includes(post?.user?._id) || post?.user?._id == user?._id
 
     const [OpenCommentBox, setOpenCommentBox] = useState(false)
-    const liked = post.likes.includes(user?._id);
-    const likeOrDislikeHandler = async (Post_id: any) => {
+    const liked = post?.likes?.includes(user?._id);
+    const likeOrDislikeHandler = async (Post_id: Schema.Types.ObjectId) => {
         try {
             if (!user) {
                 handleLoginClick()
@@ -57,7 +63,7 @@ const PostCard = ({ post }: { post: any }) => {
         }
     }
     const Bookmarked = user?.savedPost.includes(post?._id);
-    const BookmarkHandler = async (Post_id: any) => {
+    const BookmarkHandler = async (Post_id: Schema.Types.ObjectId) => {
         try {
             if (!user) {
                 handleLoginClick()
@@ -72,14 +78,14 @@ const PostCard = ({ post }: { post: any }) => {
             return error
         }
     }
-    const followhandler = async (fllowUserId: any) => {
+    const followhandler = async (fllowUserId: Schema.Types.ObjectId) => {
         try {
             if (!user) {
                 handleLoginClick()
                 return
             }
             await axios.post(`${baseUrl}/api/v1/user/follow`, { fllowUserId })
-            // tost popup
+            toast.success(`You Follow ${post?.user?.username}`)
             return
         } catch (error) {
             return error
@@ -101,8 +107,7 @@ const PostCard = ({ post }: { post: any }) => {
             return error
         }
     }
-
-    const createdAt: number | string = post?.createdAt ?? 0;
+    const createdAt: Date | string = post?.createdAt ?? 0;
     const createdAtDate = new Date(createdAt);
     const currentDate = new Date();
 
@@ -163,7 +168,7 @@ const PostCard = ({ post }: { post: any }) => {
                         post?.location ? <p className="mr-3 text-gray-500 text-[13.5px] flex flex-row justify-center items-center"><ImLocation2 />{post?.location}</p> : ""
                     }
                     {
-                        post?.music?.file ? <p className="mr-3 text-gray-500 text-[13.5px] flex flex-row justify-center items-center"><FaMusic />{post?.music?.file}</p> : ""
+                        post?.music ? <p className="mr-3 text-gray-500 text-[13.5px] flex flex-row justify-center items-center"><FaMusic />{post?.music}</p> : ""
                     }
                 </div>
             </div>
@@ -174,7 +179,7 @@ const PostCard = ({ post }: { post: any }) => {
                     <CarouselContent>
 
                         {
-                            post?.files?.map((file: any, index: number) => {
+                            post?.files?.map((file: Ifile, index: number) => {
                                 return (
                                     <CarouselItem key={index} >
                                         <div className="p-4 flex justify-center ">
@@ -211,12 +216,12 @@ const PostCard = ({ post }: { post: any }) => {
                 <div className="flex items-center">
                     <button onClick={() => likeOrDislikeHandler(post._id)} className={`flex items-center  hover:text-blue-500 ${liked ? "text-blue-500" : "text-gray-600"}`}>
                         <FaThumbsUp className="w-5 h-5 mr-1" />
-                        <span>{post?.likes.length}</span>
+                        <span>{post?.likes?.length}</span>
                     </button>
 
                     <button className="flex items-center ml-4 text-gray-600 hover:text-blue-500" onClick={() => openComments(post?.comments)}>
                         <FaComment className="w-5 h-5 mr-1" />
-                        <span>{post?.comments.length}</span>
+                        <span>{Array.isArray(post?.comments) ? post?.comments?.length : 0}</span>
                     </button>
                 </div>
 
