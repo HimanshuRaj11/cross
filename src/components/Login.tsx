@@ -5,6 +5,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { FaEye, FaEyeSlash, FaSignInAlt } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 
 function Login() {
     const dispatch = useDispatch();
@@ -34,23 +35,18 @@ function Login() {
             return { ...preVal, [name]: value };
         });
     }
-    interface UserI {
-        id: number;
-        name: string;
-        email: string;
-    }
 
     const handleSubmit = async () => {
         try {
 
-            await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/auth/login`, { LoginData }, { withCredentials: true })
+            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/auth/login`, { LoginData }, { withCredentials: true })
             dispatch(Fetchuser() as any)
             setPopover(false)
             setLoginBtn(false)
+            toast.success(data.message)
 
-        } catch (error) {
-            console.log(error);
-
+        } catch (error: any) {
+            toast.error(error.message)
         }
 
     }
