@@ -9,6 +9,7 @@ export async function POST(request: Request) {
         if (!user_id) return
         const { unfollowUserId } = await request.json()
 
+
         const userToUnFollow = await User.findOne({ _id: unfollowUserId })
         if (!userToUnFollow) return
 

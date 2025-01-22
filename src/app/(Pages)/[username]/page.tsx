@@ -12,9 +12,9 @@ const banner = "https://wallpapers.com/images/hd/cyber-background-tp8xgh7o6vfh5k
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 import moment from 'moment';
 import UserPostscard from '@/components/UserPostscard';
-import { IUser } from '@/models/user.model';
 import { Schema } from 'mongoose';
 import { IPost } from '@/models/post.model';
+import { toast } from 'react-toastify';
 
 
 
@@ -34,6 +34,7 @@ const ProfilePage: React.FC = () => {
     const followings = PathUser?.followings?.length
     const postLength = PathUser?.posts?.length
     const followed = user?.followings?.includes(PathUser?._id)
+    console.log(followed);
 
     const posts = PathUser?.posts
 
@@ -54,21 +55,21 @@ const ProfilePage: React.FC = () => {
             throw error
         }
     }
-    const followhandler = async (fllowUserId: Schema.Types.ObjectId) => {
+    const followhandler = async (followUserId: Schema.Types.ObjectId) => {
         try {
 
-            await axios.post(`${baseUrl}/api/v1/user/follow`, { fllowUserId })
-            // tost popup
+            await axios.post(`${baseUrl}/api/v1/user/follow`, { followUserId })
+            toast.success(`You Follow ${PathUser?.username}`)
             return
         } catch (error) {
             return error
         }
     }
-    const unfollowhandler = async (unfllowUserId: Schema.Types.ObjectId) => {
+    const unfollowhandler = async (unfollowUserId: Schema.Types.ObjectId) => {
         try {
 
-            await axios.post(`${baseUrl}/api/v1/user/unfollow`, { unfllowUserId })
-            // tost popup
+            await axios.post(`${baseUrl}/api/v1/user/unfollow`, { unfollowUserId })
+            toast.success(`You UnFollow ${PathUser?.username}`)
             return
         } catch (error) {
             return error
@@ -89,9 +90,6 @@ const ProfilePage: React.FC = () => {
                         alt="Profile"
                         className="w-32 h-32 rounded-full border-4 border-white absolute left-1/2 transform -translate-x-1/2 -bottom-16"
                     />
-
-
-
                 </div>
                 <div className="pt-20 px-6 pb-6">
                     <div className="text-center">
@@ -115,23 +113,22 @@ const ProfilePage: React.FC = () => {
                     </div>
                     <div className="flex justify-around mt-4">
                         {
-                            PathUser?._id == user?._id ? "" :
-                                followed ? (
-                                    <button
-                                        onClick={() => followhandler(PathUser?._id)}
-                                        className={`px-4 py-2 rounded-full font-semibold bg-red-500 text-white hover:opacity-90`}
-                                    >
-                                        Unfollow
-                                    </button>
 
-                                ) : (
-                                    <button
-                                        onClick={() => unfollowhandler(PathUser?._id)}
-                                        className={`px-4 py-2 rounded-full font-semibold 'bg-blue-500 text-white hover:opacity-90`}
-                                    >
-                                        Follow
-                                    </button>
-                                )
+                            followed ? (
+                                <button
+                                    onClick={() => unfollowhandler(PathUser?._id)}
+                                    className={`px-4 py-2 rounded-full font-semibold bg-red-500 text-white hover:opacity-90`}
+                                >
+                                    Unfollow
+                                </button>
+
+                            ) :
+                                <button
+                                    onClick={() => followhandler(PathUser?._id)}
+                                    className={`px-4 py-2 rounded-full font-semibold bg-blue-500 text-white hover:opacity-90`}
+                                >
+                                    Follow
+                                </button>
                         }
 
                         <button

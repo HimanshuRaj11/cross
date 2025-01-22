@@ -35,8 +35,8 @@ export default function RootLayout({
 
 
   return (
-    <html lang="en">
-      <body
+    <html lang="en" suppressHydrationWarning>
+      <body suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Providers>
@@ -49,7 +49,7 @@ export default function RootLayout({
               <TopBar />
               <MobileBarMenu />
 
-              <div className="min-h-screen w-full sm:w-[80vw] md:w-[82vw] sm:left-20 md:left-[16vw] relative">
+              <div className="min-h-screen w-full sm:w-[80vw] md:w-[80vw] sm:left-20 md:left-[18vw] relative">
                 {children}
                 <FetchuserDetails />
               </div>
