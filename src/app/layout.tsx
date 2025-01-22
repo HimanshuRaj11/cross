@@ -8,6 +8,8 @@ import ShowPopover from "@/components/showPopover";
 import Providers from "./Redux/Provider";
 import FetchuserDetails from "@/components/Fetchuser";
 import { ToastContainer } from 'react-toastify';
+import MobileBarMenu from "@/components/MobileBarMenu";
+import TopBar from "@/components/TopBar";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -44,6 +46,8 @@ export default function RootLayout({
             <div className="w-full min-h-screen flex flex-row bg-gray-100">
               <ToastContainer />
               <LeftSidebar />
+              <TopBar />
+              <MobileBarMenu />
 
               <div className="min-h-screen w-full sm:w-[80vw] md:w-[82vw] sm:left-20 md:left-[16vw] relative">
                 {children}
