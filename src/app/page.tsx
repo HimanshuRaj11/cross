@@ -2,7 +2,7 @@
 import RightSidebar from "@/components/RightSidebar";
 import StorySlider from "@/components/StoryLine";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchPost } from "./Redux/slice/PostSlice";
 import Footer from "@/components/footer";
 import Posts from "@/components/Posts";
@@ -29,6 +29,7 @@ const stories = [
 
 export default function Home() {
   const dispatch = useDispatch();
+  const { User: { user } } = useSelector((state: any) => state.User);
 
   useEffect(() => {
     dispatch(fetchPost() as any)
@@ -38,7 +39,9 @@ export default function Home() {
       <div className=" flex flex-row justify-between w-full mt-14 sm:mt-0">
         <div className="w-full lg:w-[70%]  flex flex-col">
           <div className="w-full flex items-center justify-center">
-            <StorySlider stories={stories} />
+            {
+              user && <StorySlider stories={stories} />
+            }
           </div>
           <Posts />
 

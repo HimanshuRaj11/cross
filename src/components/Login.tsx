@@ -21,6 +21,7 @@ function Login() {
         setCreatePostBtn(false)
     };
 
+
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
@@ -52,7 +53,7 @@ function Login() {
     }
 
     return (
-        <div className="flex w-[30vw] flex-col items-center justify-center">
+        <div className="flex w-[95%] flex-col items-center justify-center" >
             <div className="w-full">
                 <form className=" px-8 pt-6 pb-8 mb-4">
                     <div className="mb-4">

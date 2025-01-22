@@ -228,7 +228,7 @@ const Replies = ({ replies }: { replies: any }) => {
                                     <span className="font-medium">{reply?.user?.username}</span>
                                 </div>
                                 <div className="w-full flex flex-row">
-                                    <p className="text-gray-700 mt-1 "><span className="font-semibold">@ {reply.tagUser.username}</span> {reply?.reply}</p>
+                                    <div className="text-gray-700 mt-1 "><span className="font-semibold">@ {reply.tagUser.username}</span> {reply?.reply}</div>
                                     <button onClick={() => ReplylikeOrDislikeHandler(reply._id)} className={`${liked ? "text-blue-500" : "text-gray-500"} hover:text-blue-500 text-sm flex items-center absolute top-2 right-2 `}>
                                         <FaThumbsUp className="mr-1" />
                                     </button>

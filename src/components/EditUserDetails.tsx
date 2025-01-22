@@ -74,7 +74,7 @@ const EditUserDetails = ({
                         />
                         <FaEdit size={16} className="inline ml-2" />
                     </h2>
-                    <p className="text-gray-500">
+                    <div className="text-gray-500">
                         @<input
                             type="text"
                             value={editableData.username}
@@ -82,15 +82,15 @@ const EditUserDetails = ({
                             className="border-none text-center"
                         />
                         <FaEdit size={16} className="inline ml-2" />
-                    </p>
-                    <p className="mt-2 text-gray-600">
+                    </div>
+                    <div className="mt-2 text-gray-600">
                         <textarea
                             value={editableData.bio}
                             onChange={(e) => handleEditChange('bio', e.target.value)}
                             className="border-none text-center"
                         />
                         <FaEdit size={16} className="inline ml-2" />
-                    </p>
+                    </div>
                 </div>
                 <div className="flex justify-around mt-4 text-center">
                     <div>
@@ -122,7 +122,7 @@ const EditUserDetails = ({
                     </button>
                 </div>
                 <div className="mt-4 text-center text-gray-600">
-                    <p>
+                    <div>
                         📍 <input
                             type="text"
                             value={editableData.location}
@@ -130,9 +130,9 @@ const EditUserDetails = ({
                             className="border-none text-center"
                         />
                         <FaEdit size={16} className="inline ml-2" />
-                    </p>
+                    </div>
                     <p>📅 Joined {joinedDate}</p>
-                    <p>
+                    <div>
                         🔗 <input
                             type="text"
                             value={editableData.website}
@@ -140,7 +140,7 @@ const EditUserDetails = ({
                             className="border-none text-center"
                         />
                         <FaEdit size={16} className="inline ml-2" />
-                    </p>
+                    </div>
                 </div>
             </div>
         </div>

@@ -56,7 +56,7 @@ const Register: React.FC = () => {
     }
 
     return (
-        <div className="w-[30vw] mx-auto p-4 ">
+        <div className="w-[95%] mx-auto p-4 ">
             <div className="flex justify-center flex-col items-center text-2xl font-bold mb-4">
                 <h1>Logo</h1>
                 <h2 className='text-gray-800'>Register</h2>

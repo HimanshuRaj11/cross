@@ -72,11 +72,11 @@ const CreatePost: React.FC = () => {
 
     return (
 
-        <div className=" flex flex-col justify-center items-center w-full min-h-[80vh] ">
-            <div className="flex flex-col relative items-center  w-[50rem] h-[33rem] box-shadow rounded-lg">
+        <div className=" flex flex-col justify-center items-center w-full min-h-[80vh] overflow-y-scroll">
+            <div className="flex flex-col relative items-center  w-[95%] h-[33rem] box-shadow rounded-lg">
                 <h1 className="dark:text-light-text text-dark-text text-2xl my-2">Create a Post</h1>
-                <div className="flex flex-row justify-around w-full">
-                    <div className=" font-bold py-2 w-[48%] h-[26rem] mt-10 px-4 rounded flex justify-center items-center">
+                <div className="flex flex-col md:flex-row justify-around w-full">
+                    <div className=" font-bold py-2 md:w-[48%] md:h-[26rem] md:mt-10 px-4 rounded flex justify-center items-center">
                         {
                             PostFiles && PostFiles.length > 0 ? (
                                 <div className="flex justify-center items-center relative">
@@ -132,7 +132,7 @@ const CreatePost: React.FC = () => {
                         }
 
                     </div>
-                    <div className=" w-[48%] h-[26rem]">
+                    <div className=" md:w-[48%] md:h-[26rem]">
                         <div className="my-2">
                             <h3 className="block text-sm font-medium leading-6 text-dark-text dark:text-light-text">
                                 Content
@@ -172,8 +172,8 @@ const CreatePost: React.FC = () => {
                         </div>
 
                     </div>
+                    <Button onClick={handlePostSubmit} className="md:absolute bottom-3 right-2 font-semibold bg-blue-600">Post</Button>
                 </div>
-                <Button onClick={handlePostSubmit} className="absolute bottom-3 right-2 font-semibold bg-blue-600">Post</Button>
             </div>
         </div>
     )

@@ -39,17 +39,17 @@ const PostCard = ({ post }: { post: any }) => {
     const { User: { user } } = useSelector((state: any) => state.User);
 
 
-    const [socket, setSocket] = useState<any>(undefined)
-    useEffect(() => {
-        if (user) {
-            const userId = user?._id
-            console.log(userId);
+    // const [socket, setSocket] = useState<any>(undefined)
+    // useEffect(() => {
+    //     if (user) {
+    //         const userId = user?._id
+    //         console.log(userId);
 
-            const socket = io('http://localhost:5000/')
-            setSocket(socket)
-            socket.emit("User", userId)
-        }
-    }, [])
+    //         const socket = io('http://localhost:5000/')
+    //         setSocket(socket)
+    //         socket.emit("User", userId)
+    //     }
+    // }, [user])
 
 
 
@@ -180,10 +180,10 @@ const PostCard = ({ post }: { post: any }) => {
                 <div className="flex flex-row">
                     <p className="mr-3 text-gray-500 text-[13.5px] flex flex-row justify-center items-center">{PostTime}</p>
                     {
-                        post?.location ? <p className="mr-3 text-gray-500 text-[13.5px] flex flex-row justify-center items-center"><ImLocation2 />{post?.location}</p> : ""
+                        post?.location ? <div className="mr-3 text-gray-500 text-[13.5px] flex flex-row justify-center items-center"><ImLocation2 />{post?.location}</div> : ""
                     }
                     {
-                        post?.music ? <p className="mr-3 text-gray-500 text-[13.5px] flex flex-row justify-center items-center"><FaMusic />{post?.music}</p> : ""
+                        post?.music ? <div className="mr-3 text-gray-500 text-[13.5px] flex flex-row justify-center items-center"><FaMusic />{post?.music}</div> : ""
                     }
                 </div>
             </div>

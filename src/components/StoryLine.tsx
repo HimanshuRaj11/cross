@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useRef } from 'react';
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 
 interface Story {
     id: number;
@@ -15,25 +15,19 @@ interface StorySliderProps {
 
 const StorySlider: React.FC<StorySliderProps> = ({ stories }) => {
     const sliderRef = useRef<HTMLDivElement>(null);
+    const { User: { user } } = useSelector((state: any) => state.User);
 
-    const handlePrev = () => {
-        if (sliderRef.current) {
-            sliderRef.current.scrollBy({ left: -100, behavior: 'smooth' });
-        }
-    };
-
-    const handleNext = () => {
-        if (sliderRef.current) {
-            sliderRef.current.scrollBy({ left: 100, behavior: 'smooth' });
-        }
-    };
 
     return (
         <div className="flex p-4 items-center justify-center  w-full">
-            {/* <button onClick={handlePrev} className="text-gray-600 hover:text-blue-500">
-                <FaChevronLeft />
-            </button> */}
             <div ref={sliderRef} className="flex space-x-2 overflow-x-scroll scrollbar-hide">
+                <div className={`transition-transform duration-500 ease-in-out transform $scale-100`}
+                >
+                    <div className="w-16 h-16 rounded-full border-2 border-blue-500 overflow-hidden">
+                        <img src={`https://picsum.photos/200/300?random`} alt={''} className="w-full h-full object-cover" />
+                    </div>
+                    <p className="text-center text-xs mt-2">{user?.username}</p>
+                </div>
                 {stories.map((story, index) => (
                     <div
                         key={story.id}
@@ -47,9 +41,6 @@ const StorySlider: React.FC<StorySliderProps> = ({ stories }) => {
                     </div>
                 ))}
             </div>
-            {/* <button onClick={handleNext} className="text-gray-600 hover:text-blue-500">
-                <FaChevronRight />
-            </button> */}
         </div>
     );
 };

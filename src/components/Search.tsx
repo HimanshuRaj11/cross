@@ -30,7 +30,7 @@ function Searchbox() {
     };
 
     return (
-        <div className="max-w-lg mx-auto p-4 h-[80vh] w-[80vw] lg:w-[40vw]">
+        <div className="max-w-lg mx-auto p-1 h-[80vh] w-[90%] ">
             <div className="mb-4">
                 <input
                     type="text"
@@ -41,7 +41,7 @@ function Searchbox() {
                 />
 
             </div>
-            <div className="space-y-4">
+            <div className="space-y-4 overflow-y-scroll scrollbar-hide">
                 {results.map((result, index) => (
                     <div
                         key={index}

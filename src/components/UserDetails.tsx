@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { usePathname } from 'next/navigation';
 import axios from 'axios';
 import { IUser } from '@/models/user.model';
+import moment from 'moment';
 const avatarUrl = "https://www.svgrepo.com/show/327465/person-circle.svg"
 const banner = "https://wallpapers.com/images/hd/cyber-background-tp8xgh7o6vfh5kb8.jpg"
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
@@ -91,10 +92,8 @@ const UserDetails = () => {
                 </div>
                 <div className="mt-4 text-center text-gray-600">
                     <p>📍 {location}</p>
-                    {/* <p>📅 Joined {user?.createdAt}</p> */}
-                    <p>
-                        {/* 🔗 <a href={user?.website} className="text-blue-500 hover:underline">{user?.website}</a> */}
-                    </p>
+                    <p>📅 Joined  {moment(PathUser?.createdAt).format('DD MMM YYYY')}</p>
+
                 </div>
             </div>
         </div>

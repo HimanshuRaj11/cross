@@ -26,7 +26,7 @@ const ProfileCard = () => {
                     <p className="text-gray-500">@{user?.username}</p>
                     <p className="mt-2 text-gray-600">{user?.bio}</p>
 
-                    <Link href={`/account`} >
+                    <Link href={`/${user?.username}`} >
                         <Button className='mt-4'> Profile</Button>
                     </Link>
                 </div>

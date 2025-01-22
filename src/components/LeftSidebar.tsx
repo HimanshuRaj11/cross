@@ -75,7 +75,7 @@ export default function LeftSidebar() {
         { icon: <FaBell className='size-6' />, label: 'Notification', onClick: handleNotificationClick },
         { icon: <FaPlusCircle className='size-6' />, label: 'Create', onClick: handleCreatePost },
         ...(user ? [
-            { icon: <FaUser className='size-6' />, label: 'Account', link: `/account` },
+            { icon: <FaUser className='size-6' />, label: 'Account', link: `/${user?.username}` },
             { icon: <FaSignOutAlt className='size-6' />, label: 'Logout', onClick: handleLogout }
         ] : [
             { icon: <FaSignInAlt className='size-6' />, label: 'Login', onClick: handleLoginClick }

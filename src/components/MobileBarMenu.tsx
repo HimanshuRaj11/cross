@@ -47,7 +47,7 @@ function MobileBarMenu() {
         { icon: <FaPlusCircle className='size-6' />, label: 'Create', onClick: handleCreatePost },
     ]
     return (
-        <div className='sm:hidden fixed bottom-0 w-full py-3 z-50 left-0 bg-gray-800 flex justify-around items-center flex-row'>
+        <div className='sm:hidden fixed bottom-0 w-full py-3 z-40 left-0 bg-gray-800 flex justify-around items-center flex-row'>
 
             {menuItems.map((item, index) => (
 
