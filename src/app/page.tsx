@@ -35,7 +35,7 @@ export default function Home() {
   }, [])
   return (
     <div>
-      <div className=" flex flex-row justify-between w-full ">
+      <div className=" flex flex-row justify-between w-full mt-14 sm:mt-0">
         <div className="w-full lg:w-[70%]  flex flex-col">
           <div className="w-full flex items-center justify-center">
             <StorySlider stories={stories} />

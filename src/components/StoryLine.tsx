@@ -29,11 +29,11 @@ const StorySlider: React.FC<StorySliderProps> = ({ stories }) => {
     };
 
     return (
-        <div className="flex p-4 items-center justify-center space-x-4 w-[80%]">
-            <button onClick={handlePrev} className="text-gray-600 hover:text-blue-500">
-                <FaChevronLeft className="w-6 h-6" />
-            </button>
-            <div ref={sliderRef} className="flex space-x-4 overflow-x-scroll scrollbar-hide">
+        <div className="flex p-4 items-center justify-center  w-full">
+            {/* <button onClick={handlePrev} className="text-gray-600 hover:text-blue-500">
+                <FaChevronLeft />
+            </button> */}
+            <div ref={sliderRef} className="flex space-x-2 overflow-x-scroll scrollbar-hide">
                 {stories.map((story, index) => (
                     <div
                         key={story.id}
@@ -47,9 +47,9 @@ const StorySlider: React.FC<StorySliderProps> = ({ stories }) => {
                     </div>
                 ))}
             </div>
-            <button onClick={handleNext} className="text-gray-600 hover:text-blue-500">
-                <FaChevronRight className="w-6 h-6" />
-            </button>
+            {/* <button onClick={handleNext} className="text-gray-600 hover:text-blue-500">
+                <FaChevronRight />
+            </button> */}
         </div>
     );
 };
