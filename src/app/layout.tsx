@@ -20,7 +20,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Jiiwal",
+  title: "CROSS",
   description: "Social media app",
 };
 

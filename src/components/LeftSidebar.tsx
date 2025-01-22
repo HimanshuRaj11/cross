@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { Fetchuser } from '@/app/Redux/slice/userSlice';
 import { IUser } from '@/models/user.model';
+import Image from 'next/image';
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
 
@@ -86,7 +87,7 @@ export default function LeftSidebar() {
         <div className='hidden sm:flex flex-col fixed top-0 left-0 h-full w-[8%] md:w-[19%] lg:w-[16%] bg-gray-800 text-white transition-all duration-300 ease-in-out'>
             <div className='flex flex-col items-center sm:items-start p-4'>
                 <div className='flex items-center justify-center w-full mb-4'>
-                    <span className='text-2xl font-bold hidden md:block'>Logo</span>
+                    <Link href={'/'} className='text-2xl font-bold hidden md:flex justify-center items-center flex-row '> <Image src="/cross1.png" height={100} width={100} alt='CROSS' /> CROSS </Link>
                     <span className='text-2xl font-bold md:hidden'>L</span>
                 </div>
                 <div className='flex flex-col space-y-4'>

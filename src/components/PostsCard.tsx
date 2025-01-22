@@ -1,6 +1,6 @@
 // components/PostCard.tsx
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaThumbsUp, FaComment, FaShareAlt, FaMusic, FaBookmark } from 'react-icons/fa';
 import { HiDotsVertical } from 'react-icons/hi';
 import { useSelector } from 'react-redux';
@@ -18,13 +18,12 @@ import axios from 'axios';
 import { useGlobalContext } from '@/context/contextProvider';
 import { ImLocation2 } from 'react-icons/im';
 import { CommentsBox } from './Comments';
-import { IUser } from '@/models/user.model';
 import { Schema } from 'mongoose';
-import { Ifile, IPostExt } from '@/models/post.model';
+import { Ifile } from '@/models/post.model';
 import { toast } from 'react-toastify';
 const avatarUrl = "https://www.svgrepo.com/show/327465/person-circle.svg"
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
-
+import { io } from "socket.io-client"
 
 
 const PostCard = ({ post }: { post: any }) => {
@@ -37,8 +36,25 @@ const PostCard = ({ post }: { post: any }) => {
         setCreatePostBtn(false)
         setRegisterBtn(false)
     };
-
     const { User: { user } } = useSelector((state: any) => state.User);
+
+
+    const [socket, setSocket] = useState<any>(undefined)
+    useEffect(() => {
+        if (user) {
+            const userId = user?._id
+            console.log(userId);
+
+            const socket = io('http://localhost:5000/')
+            setSocket(socket)
+            socket.emit("User", userId)
+        }
+    }, [])
+
+
+
+
+
 
     const FileLength = Array.isArray(post?.files) ? post?.files.length : 0
 
