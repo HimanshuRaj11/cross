@@ -148,12 +148,12 @@ const PostCard = ({ post }: { post: any }) => {
 
             <div className="flex items-center justify-between px-4 py-1">
                 <div className='flex items-center'>
-                    <Link href={post?.user?.username}>
+                    <Link href={post?.user ? post?.user?.username : ""}>
                         <img className="w-10 h-10 object-cover rounded-full" src={post?.user?.profilePic?.file ? post?.user?.profilePic?.file : avatarUrl} alt="User avatar" />
                     </Link>
 
                     <div className="mx-3 ">
-                        <Link className='flex flex-col' href={post?.user?.username}>
+                        <Link className='flex flex-col' href={post?.user ? post?.user?.username : ""}>
                             <h2 className="text-gray-800 font-semibold">{post?.user?.name}</h2>
                             <h2 className="text-gray-600 text-[13.5px] font-semibold">@{post?.user?.username}</h2>
                         </Link>

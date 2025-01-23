@@ -43,8 +43,6 @@ function Popovercard() {
                     Registerbtn ? <Register /> : ""
                 }
 
-
-
             </div>
         </div>
     );

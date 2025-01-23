@@ -34,10 +34,10 @@ const ProfilePage: React.FC = () => {
     const followings = PathUser?.followings?.length
     const postLength = PathUser?.posts?.length
     const followed = user?.followings?.includes(PathUser?._id)
-    console.log(followed);
 
     const posts = PathUser?.posts
 
+    const selfUser = PathUser?._id == user?._id
 
     // const savedPosts = PathUser?.savedPost
 
@@ -158,7 +158,7 @@ const ProfilePage: React.FC = () => {
                 {activeTab === 'Posts' && (
                     <div className="flex justify-center flex-wrap">
                         {
-                            posts?.map((post: IPost, i: number) => <UserPostscard key={i} post={post} />)
+                            posts?.map((post: IPost, i: number) => <UserPostscard key={i} post={post} selfUser={selfUser} />)
 
                         }
                     </div>

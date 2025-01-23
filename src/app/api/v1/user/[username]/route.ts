@@ -7,7 +7,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ user
         const username = (await params).username;
         const user = await User.findOne({ username })
             .select('-password')
-            .populate({ path: 'posts' });
+            .populate({ path: 'posts', options: { sort: { createdAt: -1 } } });
         const response = NextResponse.json({ user }, { status: 200 });
 
         return response;
