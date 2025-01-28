@@ -17,7 +17,7 @@ const MessageSchema = new mongoose.Schema({
         require: true,
         trim: true
     }
-})
+}, { timestamps: true })
 
 const Message: Model<Imessage> = models.Message || model("Message", MessageSchema)
 export default Message

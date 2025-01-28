@@ -58,10 +58,11 @@ const PostCard = ({ post }: { post: any }) => {
 
     const FileLength = Array.isArray(post?.files) ? post?.files.length : 0
 
-    const followed = user?.followings?.includes(post?.user?._id) || post?.user?._id == user?._id
+    const [followed, setFollowed] = useState((user?.followings?.includes(post?.user?._id) || post?.user?._id == user?._id) || false)
 
     const [OpenCommentBox, setOpenCommentBox] = useState(false)
-    const liked = post?.likes?.includes(user?._id);
+    const [liked, setLiked] = useState(post.likes.includes(user?._id) || false);
+    const [Likelength, setLikelength] = useState(post?.likes?.length)
     const likeOrDislikeHandler = async (Post_id: Schema.Types.ObjectId) => {
         try {
             if (!user) {
@@ -70,14 +71,19 @@ const PostCard = ({ post }: { post: any }) => {
             }
             const action = liked ? 'dislike' : 'like';
 
-            await axios.post(`${baseUrl}/api/v1/post/${action}`, { Post_id }, { withCredentials: true })
+            const { data } = await axios.post(`${baseUrl}/api/v1/post/${action}`, { Post_id }, { withCredentials: true })
+            if (data.success) {
+                setLiked(!liked);
+                setLikelength(liked ? Likelength - 1 : Likelength + 1)
+
+            }
 
             return
         } catch (error) {
             return error
         }
     }
-    const Bookmarked = user?.savedPost.includes(post?._id);
+    const [Bookmarked, setBookmarked] = useState(user?.savedPost.includes(post?._id) || false);
     const BookmarkHandler = async (Post_id: Schema.Types.ObjectId) => {
         try {
             if (!user) {
@@ -86,8 +92,10 @@ const PostCard = ({ post }: { post: any }) => {
             }
             const action = Bookmarked ? 'unbookmarkpost' : 'bookmarkpost';
 
-            await axios.post(`${baseUrl}/api/v1/user/${action}`, { Post_id }, { withCredentials: true })
-
+            const { data } = await axios.post(`${baseUrl}/api/v1/user/${action}`, { Post_id }, { withCredentials: true })
+            if (data.success) {
+                setBookmarked(true)
+            }
             return
         } catch (error) {
             return error
@@ -99,8 +107,11 @@ const PostCard = ({ post }: { post: any }) => {
                 handleLoginClick()
                 return
             }
-            await axios.post(`${baseUrl}/api/v1/user/follow`, { fllowUserId })
-            toast.success(`You Follow ${post?.user?.username}`)
+            const { data } = await axios.post(`${baseUrl}/api/v1/user/follow`, { fllowUserId })
+            if (data.success) {
+                setFollowed(true)
+                toast.success(`You Follow ${post?.user?.username}`)
+            }
             return
         } catch (error) {
             return error
@@ -203,7 +214,8 @@ const PostCard = ({ post }: { post: any }) => {
                                                     FileLength !== 1 ?
                                                         <span className='absolute rounded-md bg-gray-300 opacity-80 top-2 right-5'>{index + 1}/{FileLength}</span> : ""
                                                 }
-                                                <img className="w-[100%] max-h-[30rem] object-contain rounded-lg" src={file?.url} alt={"userDetails?.username"} />
+
+                                                <img onDoubleClick={() => likeOrDislikeHandler(post._id)} className="w-[100%] max-h-[30rem] object-contain rounded-lg" src={file?.url} alt={"userDetails?.username"} />
                                             </div>
                                         </div>
                                     </CarouselItem>
@@ -231,7 +243,7 @@ const PostCard = ({ post }: { post: any }) => {
                 <div className="flex items-center">
                     <button onClick={() => likeOrDislikeHandler(post._id)} className={`flex items-center  hover:text-blue-500 ${liked ? "text-blue-500" : "text-gray-600"}`}>
                         <FaThumbsUp className="w-5 h-5 mr-1" />
-                        <span>{post?.likes?.length}</span>
+                        <span>{Likelength}</span>
                     </button>
 
                     <button className="flex items-center ml-4 text-gray-600 hover:text-blue-500" onClick={() => openComments(post?.comments)}>

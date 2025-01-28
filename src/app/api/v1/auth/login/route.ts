@@ -38,7 +38,7 @@ export async function POST(request: Request) {
 
         const token: string = jwt.sign(tokenData, process.env.TOKEN_SECRET as string);
         const response = NextResponse.json({ message: `Nice to see You again! ${user?.name} ` }, { status: 200 })
-        response.cookies.set("Jiiwal_auth_token", token, {
+        response.cookies.set("cross_auth_token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production", // Secure cookie in production
             sameSite: "strict",

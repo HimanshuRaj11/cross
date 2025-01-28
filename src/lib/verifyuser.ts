@@ -11,7 +11,7 @@ interface DecodedToken {
 export const verifyUser = async (): Promise<string | NextResponse> => {
     try {
         const cookiesObj = await cookies();
-        const token = cookiesObj.get("Jiiwal_auth_token")?.value;
+        const token = cookiesObj.get("cross_auth_token")?.value;
 
         if (!token) {
             return NextResponse.json({ message: "Token not found!" }, { status: 401 });

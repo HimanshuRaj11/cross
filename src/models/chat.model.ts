@@ -12,10 +12,11 @@ const ChatSchema = new mongoose.Schema({
         ref: "Message"
     }],
     users: [{
+        require: true,
         type: Schema.Types.ObjectId,
         ref: "User"
     }]
-})
+}, { timestamps: true })
 
 const Chat: Model<IChat> = models.Chat || model("Chat", ChatSchema)
 
