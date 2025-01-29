@@ -43,19 +43,22 @@ export default function RootLayout({
 
           <GlobalContextProvider>
 
-            <div className="w-full min-h-screen flex flex-row bg-gray-100">
+            <div className="w-full min-h-screen flex flex-row">
               <ToastContainer />
-              <LeftSidebar />
               <TopBar />
               <MobileBarMenu />
 
-              <div className="min-h-screen w-full sm:w-[80vw] md:w-[80vw] sm:left-20 md:left-[18vw] relative">
-                {children}
-                <FetchuserDetails />
+              <div className=" bg-gray-100 flex flex-row w-full">
+                <div className="hidden sm:flex w-[8%] md:w-[22%] lg:w-[16%] h-screen bg-slate-800">
+                  <LeftSidebar />
+                </div>
+                <div className="min-h-screen w-full sm:w-[92%] md:w-[78%] lg:w-[84%] relative">
+                  {children}
+                </div>
               </div>
 
+              <FetchuserDetails />
               <ShowPopover />
-
             </div>
 
           </GlobalContextProvider>

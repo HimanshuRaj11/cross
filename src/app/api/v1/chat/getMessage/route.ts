@@ -12,6 +12,8 @@ export async function POST(request: Request) {
 
         const chat = await Chat.findOne({ _id: Chat_id }).populate({
             path: "messages",
+            model: Message,
+            options: { sort: { createdAt: +1 } },
             populate: {
                 path: "user",
                 select: "_id username name profilePic"
@@ -22,6 +24,8 @@ export async function POST(request: Request) {
 
         return NextResponse.json({ chat, success: true }, { status: 200 })
     } catch (error) {
+        console.log(error);
+
         return NextResponse.json(InternalServerError(error as Error))
     }
 }

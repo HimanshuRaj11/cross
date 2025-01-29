@@ -40,9 +40,10 @@ export async function POST(request: Request) {
         const response = NextResponse.json({ message: `Nice to see You again! ${user?.name} ` }, { status: 200 })
         response.cookies.set("cross_auth_token", token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production", // Secure cookie in production
+            secure: process.env.NODE_ENV === "production",
             sameSite: "strict",
             path: "/",
+            maxAge: 60 * 60 * 24 * 365
         })
         return response
     } catch (error) {

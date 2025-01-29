@@ -14,19 +14,20 @@ export async function POST(request: Request) {
 
         if (!message || !Chat_id) return NextResponse.json({ message: "Somthing went wrong!", error: true }, { status: 500 })
 
-        const NewMessage = await Message.create({
+        const CreateNewMessage = await Message.create({
             user: user_id,
             message
         })
+        const NewMessage = await Message.findById({ _id: CreateNewMessage._id }).populate("user", "_id username name profilePic")
 
         const chat = await Chat.findOneAndUpdate({ _id: Chat_id }, {
             $push: {
-                messages: NewMessage._id
+                messages: CreateNewMessage._id
             }
         }, { returnDocument: "after" })
 
 
-        return NextResponse.json({ message: "", chat, success: true }, { status: 200 })
+        return NextResponse.json({ NewMessage, success: true }, { status: 200 })
     } catch (error) {
         return NextResponse.json(InternalServerError(error as Error))
     }

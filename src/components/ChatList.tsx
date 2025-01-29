@@ -44,20 +44,20 @@ export default function ChatList({ setselectedChat }: { setselectedChat: any }) 
         FetchChatList()
     }, [])
     return (
-        <div className='flex flex-col'>
+        <div className='flex flex-col w-full overflow-y-auto h-[85%] sm:h-[88%]'>
             {
                 ChatList?.map((chat: any, i: number) => {
-                    const OtherUser = chat?.users?.filter((C_user: any) => C_user._id !== user._id)?.[0] || {};
+                    const OtherUser = chat?.users?.filter((C_user: any) => C_user?._id !== user?._id)?.[0] || {};
                     return (
-                        <div key={i} onClick={() => SelectChat(chat?._id)} className="p-2 my-2 bg-gray-200 cursor-pointer flex items-center rounded-lg">
-                            <div className="mr-1">
+                        <div key={i} onClick={() => SelectChat(chat?._id)} className="relative p-2 my-2 bg-gray-200 cursor-pointer flex items-center rounded-lg">
+                            <div className="mr-1 w-10">
                                 <img className="w-10 h-10 object-cover rounded-full" src={OtherUser.profilePic?.file ? OtherUser.profilePic?.file : avatarUrl} alt="User avatar" />
                             </div>
-                            <div className="flex-1">
+                            <div className="flex-1 w-auto">
                                 <div className="font-bold w-40 h-5 overflow-hidden ">{OtherUser.username}</div>
                                 <div className="text-sm text-gray-600 overflow-hidden w-40 h-5">Last message</div>
                             </div>
-                            <div className="text-[10px] text-gray-500 ml-1">12:45 PM</div>
+                            <p className="text-[10px] absolute bottom-1 right-1 text-gray-500 ml-1">12:45 PM</p>
                         </div>
                     )
                 })

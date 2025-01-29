@@ -9,7 +9,7 @@ export interface IChat {
 const ChatSchema = new mongoose.Schema({
     messages: [{
         type: Schema.Types.ObjectId,
-        ref: "Message"
+        ref: 'Message'
     }],
     users: [{
         require: true,

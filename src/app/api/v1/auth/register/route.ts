@@ -56,6 +56,7 @@ export async function POST(request: Request) {
             secure: process.env.NODE_ENV === "production", // Secure cookie in production
             sameSite: "strict",
             path: "/",
+            maxAge: 60 * 60 * 24 * 365
         });
         // Send verification email (commented as per your original code)
         // await sendEmail({ email, emailType: "VERIFY", userId: newUser._id.toString() });

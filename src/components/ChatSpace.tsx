@@ -1,7 +1,8 @@
 "use client"
 import axios from 'axios'
+import moment from 'moment'
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { FaEllipsisV, FaMicrophone, FaPaperclip, FaPaperPlane, FaPhone, FaSmile, FaUser, FaVideo } from 'react-icons/fa'
 import { useSelector } from 'react-redux'
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
@@ -10,35 +11,49 @@ export default function ChatSpace({ selectedChat }: { selectedChat: any }) {
     const { User: { user } } = useSelector((state: any) => state.User);
     const OtherUser = selectedChat?.users?.filter((C_user: any) => C_user._id !== user._id)?.[0] || {};
 
-    const [messages, setmessages] = useState('')
+    const scrollableRef = useRef(null);
 
-    const [InputMessage, setInputMessage] = useState("")
+    const [Chats, setChats] = useState<any>()
+    const messages = Chats?.messages;
+    const [InputMessage, setInputMessage] = useState("");
+    const [updatedMessages, setUpdatedMessages] = useState<any>([]);
+
     const handlemessageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setInputMessage(e.target.value)
-    }
+        setInputMessage(e.target.value);
+    };
+
     const sendMessage = async () => {
         try {
-            await axios.post(`${baseUrl}/api/v1/chat/sendMessage`, { Chat_id: selectedChat._id, message: InputMessage })
-            return
+            const { data } = await axios.post(`${baseUrl}/api/v1/chat/sendMessage`, { Chat_id: selectedChat._id, message: InputMessage });
+            if (data.success) {
+                setUpdatedMessages((prevMessages = []) => [...prevMessages, data.NewMessage]);
+                setInputMessage("")
+            }
+            return;
         } catch (error) {
-            return
+            return;
         }
-    }
+    };
     const FetchMessages = async () => {
         try {
-            const { data } = await axios.post(`${baseUrl}/api/v1/chat/getMessage`, { Chat_id: selectedChat._id })
-            console.log(data);
+            const { data: { chat } } = await axios.post(`${baseUrl}/api/v1/chat/getMessage`, { Chat_id: selectedChat._id })
+            setChats(chat);
             return
         } catch (error) {
             return
         }
     }
+    const scrollToTop = () => {
+        if (scrollableRef.current) {
+            scrollableRef.current = scrollableRef.current;
+        }
+    };
     useEffect(() => {
         FetchMessages()
-    }, [])
+    }, [selectedChat])
 
     return (
-        <div className="w-[80vw] md:w-[80vw] flex flex-col">
+        <div className="w-full h-full  md:h-screen flex flex-col">
 
             <div className="flex items-center justify-between p-4 bg-white border-b border-gray-300">
                 <div className="flex items-center">
@@ -58,23 +73,94 @@ export default function ChatSpace({ selectedChat }: { selectedChat: any }) {
                 </div>
             </div>
 
-            {/*  Message Room*/}
-            <div className="flex-1 p-4 overflow-y-auto bg-gray-50">
+            <div className=" relative  h-[90vh] bg-[url(/bg.jpg)]  bg-cover bg-center  ">
+                <div className=" bottom-0 px-3 absolute w-full flex h-[100%] flex-col overflow-y-scroll" ref={scrollableRef}>
 
-                <div className="mb-4">
-                    <div className="bg-blue-100 p-2 rounded-lg max-w-xs">Hello!</div>
-                </div>
+                    {
+                        messages && messages?.map((message: any, i: number) => {
+                            const MessageTime = moment(message.createdAt).format('HH:mm');
 
-                <div className="mb-4 text-right">
-                    <div className="bg-green-100 p-2 rounded-lg max-w-xs ml-auto">Hi there!</div>
+                            const currentDate = moment().startOf('date');
+                            const createdAtDate = moment(message.createdAt).startOf('date');
+
+                            let MessageDay;
+                            if (createdAtDate.isSame(currentDate, 'day')) {
+                                MessageDay = 'today';
+                            } else if (createdAtDate.isSame(currentDate.subtract(1, 'days'), 'day')) {
+                                MessageDay = 'yesterday';
+                            } else {
+                                MessageDay = moment(message.createdAt).format('YYYY-MM-DD');
+                            }
+                            return (
+                                <div key={i} className=" m-1">
+
+                                    {/* <h1>{MessageDay}</h1> */}
+                                    <div className={`${message.user._id == user._id ? "float-right" : "float-left"} `}>
+                                        <div className={`${message.user._id == user._id ? "bg-green-300" : "bg-blue-200"}  p-1 px-3 rounded-lg max-w-xs flex flex-row`}>
+                                            {
+                                                message.user._id != user._id && <img className="w-10 h-10 mr-2 object-cover rounded-full" src={message.user.profilePic?.file ? message.user.profilePic?.file : avatarUrl} alt="User avatar" />
+                                            }
+                                            <div className="flex flex-col">
+                                                {/* <p className='text-[10px]'>{message.user.username}</p> */}
+                                                <p> {message.message}</p>
+                                                <p className={`text-[10px] ${message.user._id == user._id ? "float-right" : "float-left"}`}> {MessageTime}</p>
+                                            </div>
+                                            {message.user._id == user._id && <img className="ml-2 w-10 h-10 object-cover rounded-full" src={message.user.profilePic?.file ? message.user.profilePic?.file : avatarUrl} alt="User avatar" />}
+
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
+                    {
+                        updatedMessages && updatedMessages?.map((message: any, i: number) => {
+                            const MessageTime = moment(message.createdAt).format('HH:mm');
+
+                            const currentDate = moment().startOf('date');
+                            const createdAtDate = moment(message.createdAt).startOf('date');
+
+                            let MessageDay;
+                            if (createdAtDate.isSame(currentDate, 'day')) {
+                                MessageDay = 'today';
+                            } else if (createdAtDate.isSame(currentDate.subtract(1, 'days'), 'day')) {
+                                MessageDay = 'yesterday';
+                            } else {
+                                MessageDay = moment(message.createdAt).format('YYYY-MM-DD');
+                            }
+                            return (
+                                <div key={i} className=" m-1">
+
+                                    {/* <h1>{MessageDay}</h1> */}
+                                    <div className={`${message.user._id == user._id ? "float-right" : "float-left"} `}>
+                                        <div className={`${message.user._id == user._id ? "bg-green-300" : "bg-blue-200"}  p-2 rounded-lg max-w-xs flex flex-row`}>
+                                            {
+                                                message.user._id != user._id && <img className="w-10 h-10 mr-2 object-cover rounded-full" src={message.user.profilePic?.file ? message.user.profilePic?.file : avatarUrl} alt="User avatar" />
+                                            }
+                                            <div className="flex flex-col">
+                                                {/* <p className='text-[10px]'>{message.user.username}</p> */}
+                                                <p> {message.message}</p>
+                                                <p className={`text-[10px] ${message.user._id == user._id ? "float-right" : "float-left"}`}> {MessageTime}</p>
+                                            </div>
+                                            {message.user._id == user._id && <img className="ml-2 w-10 h-10 object-cover rounded-full" src={message.user.profilePic?.file ? message.user.profilePic?.file : avatarUrl} alt="User avatar" />}
+
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
+
+
                 </div>
             </div>
-            {/*  */}
+
+
 
             <div className="p-4 bg-white border-t border-gray-300 flex items-center">
                 <button className="p-2 hover:bg-gray-200 rounded-full"><FaPaperclip /></button>
                 <button className="p-2 hover:bg-gray-200 rounded-full"><FaSmile /></button>
-                <button className="p-2 hover:bg-gray-200 rounded-full"><FaMicrophone /></button>
+                <button onClick={scrollToTop} className="p-2 hover:bg-gray-200 rounded-full"><FaMicrophone /></button>
                 <input value={InputMessage} onKeyDown={(e) => e.key === "Enter" && sendMessage()} onChange={handlemessageChange} type="text" placeholder="Type a message" className="flex-1 mx-2 p-2 border border-gray-300 rounded-lg" />
                 <button className="p-2 hover:bg-gray-200 rounded-full" onClick={sendMessage}><FaPaperPlane /></button>
             </div>

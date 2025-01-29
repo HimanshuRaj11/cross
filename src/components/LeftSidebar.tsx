@@ -83,7 +83,7 @@ export default function LeftSidebar() {
     ];
 
     return (
-        <div className='hidden sm:flex flex-col fixed top-0 left-0 h-full w-[8%] md:w-[19%] lg:w-[16%] bg-gray-800 text-white transition-all duration-300 ease-in-out'>
+        <div className='hidden sm:flex flex-col fixed top-0 left-0 h-full w-[8%] md:w-[22%] lg:w-[16%] bg-gray-800 text-white transition-all duration-300 ease-in-out'>
             <div className='flex flex-col items-center md:items-start p-4'>
                 <div className='flex items-center justify-center w-full mb-4'>
                     <Link href={'/'} className='text-2xl font-bold hidden md:flex justify-center items-center flex-row '>
