@@ -1,6 +1,5 @@
 
 import { app, server } from "./socket/socket.js"
-
 app.get("/", (req, res) => {
     res.send("Server is Running...");
 });

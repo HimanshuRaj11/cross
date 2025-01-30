@@ -1,4 +1,5 @@
 "use client"
+import { useGlobalContext } from '@/context/contextProvider'
 import axios from 'axios'
 import { Date, Schema } from 'mongoose'
 import React, { useEffect, useState } from 'react'
@@ -8,6 +9,7 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
 export default function ChatList({ setselectedChat }: { setselectedChat: any }) {
     const { User: { user } } = useSelector((state: any) => state.User);
+    const { socket } = useGlobalContext()
 
     interface IChat {
         _id: Schema.Types.ObjectId,
@@ -32,7 +34,10 @@ export default function ChatList({ setselectedChat }: { setselectedChat: any }) 
     const SelectChat = async (chat_id: any) => {
         try {
             const { data } = await axios.post(`${baseUrl}/api/v1/chat`, { chat_id })
-            setselectedChat(data.chat)
+            if (data.success) {
+                socket.emit("join-room", chat_id);
+                setselectedChat(data.chat)
+            }
             return
         } catch (error) {
             return error

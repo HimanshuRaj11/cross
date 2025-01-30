@@ -1,18 +1,18 @@
 "use client"
+import { useGlobalContext } from '@/context/contextProvider'
 import axios from 'axios'
 import moment from 'moment'
 import Link from 'next/link'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaEllipsisV, FaMicrophone, FaPaperclip, FaPaperPlane, FaPhone, FaSmile, FaUser, FaVideo } from 'react-icons/fa'
 import { useSelector } from 'react-redux'
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 const avatarUrl = "https://www.svgrepo.com/show/327465/person-circle.svg"
+
 export default function ChatSpace({ selectedChat }: { selectedChat: any }) {
     const { User: { user } } = useSelector((state: any) => state.User);
     const OtherUser = selectedChat?.users?.filter((C_user: any) => C_user._id !== user._id)?.[0] || {};
-
-    const scrollableRef = useRef(null);
-
+    const { socket } = useGlobalContext()
     const [Chats, setChats] = useState<any>()
     const messages = Chats?.messages;
     const [InputMessage, setInputMessage] = useState("");
@@ -28,6 +28,8 @@ export default function ChatSpace({ selectedChat }: { selectedChat: any }) {
             if (data.success) {
                 setUpdatedMessages((prevMessages = []) => [...prevMessages, data.NewMessage]);
                 setInputMessage("")
+                socket.emit("message", { message: data.NewMessage, chat_id: selectedChat._id })
+
             }
             return;
         } catch (error) {
@@ -43,14 +45,21 @@ export default function ChatSpace({ selectedChat }: { selectedChat: any }) {
             return
         }
     }
-    const scrollToTop = () => {
-        if (scrollableRef.current) {
-            scrollableRef.current = scrollableRef.current;
-        }
-    };
     useEffect(() => {
         FetchMessages()
     }, [selectedChat])
+    useEffect(() => {
+        const handleReceiveMessage = (data: any) => {
+            setUpdatedMessages((prevMessages = []) => [...prevMessages, data]);
+        };
+
+        socket.on("receive-message", handleReceiveMessage);
+
+        return () => {
+            socket.off("receive-message", handleReceiveMessage);
+        };
+    }, [])
+
 
     return (
         <div className="w-full h-full  md:h-screen flex flex-col">
@@ -74,7 +83,7 @@ export default function ChatSpace({ selectedChat }: { selectedChat: any }) {
             </div>
 
             <div className=" relative  h-[90vh] bg-[url(/bg.jpg)]  bg-cover bg-center  ">
-                <div className=" bottom-0 px-3 absolute w-full flex h-[100%] flex-col overflow-y-scroll" ref={scrollableRef}>
+                <div className=" bottom-0 px-3 absolute w-full flex h-[100%] flex-col overflow-y-scroll" >
 
                     {
                         messages && messages?.map((message: any, i: number) => {
@@ -151,7 +160,6 @@ export default function ChatSpace({ selectedChat }: { selectedChat: any }) {
                         })
                     }
 
-
                 </div>
             </div>
 
@@ -160,7 +168,7 @@ export default function ChatSpace({ selectedChat }: { selectedChat: any }) {
             <div className="p-4 bg-white border-t border-gray-300 flex items-center">
                 <button className="p-2 hover:bg-gray-200 rounded-full"><FaPaperclip /></button>
                 <button className="p-2 hover:bg-gray-200 rounded-full"><FaSmile /></button>
-                <button onClick={scrollToTop} className="p-2 hover:bg-gray-200 rounded-full"><FaMicrophone /></button>
+                <button className="p-2 hover:bg-gray-200 rounded-full"><FaMicrophone /></button>
                 <input value={InputMessage} onKeyDown={(e) => e.key === "Enter" && sendMessage()} onChange={handlemessageChange} type="text" placeholder="Type a message" className="flex-1 mx-2 p-2 border border-gray-300 rounded-lg" />
                 <button className="p-2 hover:bg-gray-200 rounded-full" onClick={sendMessage}><FaPaperPlane /></button>
             </div>

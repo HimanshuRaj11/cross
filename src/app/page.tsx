@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchPost } from "./Redux/slice/PostSlice";
 import Footer from "@/components/footer";
 import Posts from "@/components/Posts";
+import { useGlobalContext } from "@/context/contextProvider";
+import { io } from "socket.io-client";
 
 
 const stories = [
@@ -30,10 +32,22 @@ const stories = [
 export default function Home() {
   const dispatch = useDispatch();
   const { User: { user } } = useSelector((state: any) => state.User);
+  const { socket, setSocket } = useGlobalContext()
 
   useEffect(() => {
     dispatch(fetchPost() as any)
+
   }, [])
+  useEffect(() => {
+    if (user) {
+      console.log(process.env.NEXT_PUBLIC_SOCKET_URI);
+
+      const socket = io(`${process.env.NEXT_PUBLIC_SOCKET_URI}`)
+      setSocket(socket)
+      socket.emit("User", user?._id)
+
+    }
+  }, [user])
   return (
     <div>
       <div className=" flex flex-row justify-between w-full mt-14 sm:mt-0">

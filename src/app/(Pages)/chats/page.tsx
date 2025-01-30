@@ -2,7 +2,9 @@
 'use client'
 import ChatList from '@/components/ChatList';
 import ChatSpace from '@/components/ChatSpace';
-import React, { useState } from 'react';
+import { useGlobalContext } from '@/context/contextProvider';
+import React, { useEffect, useState } from 'react';
+
 
 const ChatInterface: React.FC = () => {
     const [selectedChat, setselectedChat] = useState()
