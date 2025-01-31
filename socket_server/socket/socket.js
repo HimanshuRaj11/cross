@@ -22,7 +22,7 @@ io.on('connection', (socket) => {
         if (userId) {
             userSocketMap[userId] = socket.id
             console.log(userId);
-            
+
         }
         io.emit("getOnlineUsers", Object.keys(userSocketMap))
         socket.on("join-room", (room) => {
@@ -39,7 +39,7 @@ io.on('connection', (socket) => {
             io.emit("getOnlineUsers", Object.keys(userSocketMap))
         })
     })
-    // const userId = socket.handshake.query.userId;
+
 
 })
 
