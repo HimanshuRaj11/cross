@@ -95,7 +95,7 @@ export default function LeftSidebar() {
                     {menuItems.map((item, index) => (
 
                         item.link ? (
-                            <Link key={index} href={item.link ? item.link : ""}  >
+                            <Link key={index} href={item.link ? item.link : ""}>
                                 <div className='flex items-center space-x-2 p-2 hover:bg-gray-700 rounded-md cursor-pointer transition-all duration-300 ease-in-out'>
                                     {item.icon}
                                     <span className='hidden md:inline text-xl'>{item.label}</span>
@@ -107,8 +107,6 @@ export default function LeftSidebar() {
                                 <span className='hidden md:inline text-xl'>{item.label}</span>
                             </div>
                         )
-
-
                     ))}
                 </div>
             </div>

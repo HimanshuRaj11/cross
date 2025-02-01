@@ -14,10 +14,10 @@ export async function POST(request: Request) {
         const chat = await Chat.findOne({ users: { $all: [user_id, OtherUser] } });
 
         if (!chat) {
-            const newChat = await Chat.create({
+            const chat = await Chat.create({
                 users: [user_id, OtherUser]
             }, { returnDocument: "after" })
-            return NextResponse.json({ message: "", newChat, success: true }, { status: 200 })
+            return NextResponse.json({ message: "", chat, success: true }, { status: 200 })
         }
 
         return NextResponse.json({ message: "", chat, success: true }, { status: 200 })

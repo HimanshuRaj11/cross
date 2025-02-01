@@ -3,10 +3,9 @@
 import AboutSection from '@/components/AboutSection';
 import Tabs from '@/components/Tabs';
 import axios from 'axios';
-import { usePathname } from 'next/navigation';
+import { usePathname, redirect } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-
 const avatarUrl = "https://www.svgrepo.com/show/327465/person-circle.svg"
 const banner = "https://wallpapers.com/images/hd/cyber-background-tp8xgh7o6vfh5kb8.jpg"
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
@@ -15,6 +14,11 @@ import UserPostscard from '@/components/UserPostscard';
 import { Schema } from 'mongoose';
 import { IPost } from '@/models/post.model';
 import { toast } from 'react-toastify';
+import MessageBtn from '@/components/MessageBtn';
+import { MdClose } from 'react-icons/md';
+import Searchbox from '@/components/Search';
+import Link from 'next/link';
+import { BiUserPlus } from 'react-icons/bi';
 
 
 
@@ -76,11 +80,81 @@ const ProfilePage: React.FC = () => {
         }
     }
 
+
+    const [ShowUserList, setShowUserList] = useState(false)
+    const [followersList, setfollowersList] = useState<any>()
+
+    const ShowFollowers = async () => {
+        try {
+            if (PathUser._id) {
+                const { data: { followers } } = await axios.post(`${baseUrl}/api/v1/user/getFollower`, { user_id: PathUser._id })
+                if (followers) {
+                    setfollowersList(followers.followers);
+                    setShowUserList(true)
+                }
+            }
+
+
+            return
+        } catch (error) {
+            return
+        }
+    }
+    const ShowFollowings = async () => {
+        try {
+            if (PathUser._id) {
+
+                const { data: { followings } } = await axios.post(`${baseUrl}/api/v1/user/getFollowing`, { user_id: PathUser._id })
+
+                if (followings) {
+                    setfollowersList(followings.followings)
+                    setShowUserList(true)
+                }
+            }
+
+            return
+        } catch (error) {
+            return
+        }
+    }
+
+    const handleClosePopOver = () => {
+        setShowUserList(false)
+    }
+
     useEffect(() => {
         fetchUsername()
     }, [])
     return (
         <div className="min-h-screen bg-gray-100">
+            {
+                ShowUserList && (
+                    <div className="fixed z-50 h-full sm:h-full sm:top-0 inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center overflow-hidden" onClick={handleClosePopOver}>
+                        <button className="absolute top-2 right-2 rounded-full p-2 bg-slate-200" onClick={handleClosePopOver}>
+                            <MdClose className='size-8 font-bold' />
+                        </button>
+                        <div className="max-w-lg mx-auto p-1 h-[80vh] w-[90%] ">
+                            <div className="mb-4">
+                                <input
+                                    type="text"
+                                    className="w-full p-2 border border-gray-300 rounded"
+                                    placeholder="Search..."
+                                // value={query}
+                                // onChange={handleChange}
+                                />
+
+                            </div>
+                            <div className="space-y-4 p-2  overflow-y-scroll scrollbar-hide bg-slate-100 rounded-lg min-h-[80vh]">
+                                {
+                                    followersList?.map((result: any, index: number) => (
+                                        <UsersList key={index} result={result} followed={followed} followhandler={followhandler} />
+                                    ))
+                                }
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
 
             <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden mt-4">
                 <div className="relative">
@@ -98,46 +172,45 @@ const ProfilePage: React.FC = () => {
                         <p className="mt-2 text-gray-600">{PathUser?.bio}</p>
                     </div>
                     <div className="flex justify-around mt-4 text-center">
-                        <div>
+                        <div onClick={ShowFollowers} className='bg-slate-300 p-2 rounded-lg w-24 cursor-pointer hover:bg-slate-400'>
                             <p className="text-lg font-bold">{followers}</p>
-                            <p className="text-gray-500">Followers</p>
+                            <p className="text-gray-600">Followers</p>
                         </div>
-                        <div>
+                        <div onClick={ShowFollowings} className='bg-slate-300 p-2 rounded-lg w-24 cursor-pointer hover:bg-slate-400'>
                             <p className="text-lg font-bold">{followings}</p>
-                            <p className="text-gray-500">Followings</p>
+                            <p className="text-gray-600">Followings</p>
                         </div>
-                        <div>
+                        <div className='bg-slate-300 p-2 rounded-lg w-24 cursor-pointer hover:bg-slate-400'>
                             <p className="text-lg font-bold">{postLength}</p>
-                            <p className="text-gray-500">Posts</p>
+                            <p className="text-gray-600">Posts</p>
                         </div>
                     </div>
-                    <div className="flex justify-around mt-4">
-                        {
+                    {
+                        !selfUser && (
+                            <div className="flex justify-around mt-4">
+                                {
 
-                            followed ? (
-                                <button
-                                    onClick={() => unfollowhandler(PathUser?._id)}
-                                    className={`px-4 py-2 rounded-full font-semibold bg-red-500 text-white hover:opacity-90`}
-                                >
-                                    Unfollow
-                                </button>
+                                    followed ? (
+                                        <button
+                                            onClick={() => unfollowhandler(PathUser?._id)}
+                                            className={`px-4 py-2 rounded-full font-semibold bg-red-500 text-white hover:opacity-90`}
+                                        >
+                                            Unfollow
+                                        </button>
 
-                            ) :
-                                <button
-                                    onClick={() => followhandler(PathUser?._id)}
-                                    className={`px-4 py-2 rounded-full font-semibold bg-blue-500 text-white hover:opacity-90`}
-                                >
-                                    Follow
-                                </button>
-                        }
+                                    ) :
+                                        <button
+                                            onClick={() => followhandler(PathUser?._id)}
+                                            className={`px-4 py-2 rounded-full font-semibold bg-blue-500 text-white hover:opacity-90`}
+                                        >
+                                            Follow
+                                        </button>
+                                }
 
-                        <button
-                            // onClick={onMessage}
-                            className="px-4 py-2 bg-gray-200 rounded-full font-semibold hover:bg-gray-300"
-                        >
-                            Message
-                        </button>
-                    </div>
+                                <MessageBtn OtherUser={PathUser?._id} />
+                            </div>
+                        )
+                    }
                     <div className="mt-4 text-center text-gray-600">
                         {PathUser?.country ? <p>📍 {location} </p> : ""}
                         <p>📅 Joined  {moment(PathUser?.createdAt).format('DD MMM YYYY')}</p>
@@ -171,3 +244,30 @@ const ProfilePage: React.FC = () => {
 };
 
 export default ProfilePage;
+
+
+
+const UsersList = ({ result, followed, followhandler }: { result: any, followed: boolean, followhandler: any }) => {
+    return (
+        <div className='flex items-center p-2 rounded-md bg-slate-300 hover:bg-slate-100 my-2 w-full'>
+            <Link href={result ? result?.username : ""}>
+                <img className="w-10 h-10 object-cover rounded-full" src={result?.profilePic?.file ? result?.profilePic?.file : avatarUrl} alt="User avatar" />
+            </Link>
+
+            <div className="mx-3 ">
+                <Link className='flex flex-col' href={result ? result?.username : ""}>
+                    <h2 className="text-gray-800 font-semibold">{result?.name}</h2>
+                    <h2 className="text-gray-600 text-[13.5px] font-semibold">@{result?.username}</h2>
+                </Link>
+            </div>
+            {
+                !followed ?
+                    <div className='w-auto' onClick={() => followhandler(result?._id)}>
+                        <div className=' flex flex-row justify-center items-center text-blue-500 font-semibold border-2 border-blue-500 rounded-2xl px-2 hover:text-white hover:bg-blue-500'>Follow <BiUserPlus className=' font-semibold ml-1 text-2xl' /></div>
+                    </div>
+                    :
+                    ""
+            }
+        </div>
+    )
+}

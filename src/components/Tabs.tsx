@@ -9,7 +9,7 @@ interface TabsProps {
 const Tabs = ({ activeTab, onTabChange }: TabsProps) => {
     return (
         <div className="flex justify-center mt-6">
-            {['Posts', 'About'].map((tab) => (
+            {['Posts'].map((tab) => (
                 <button
                     key={tab}
                     onClick={() => onTabChange(tab)}

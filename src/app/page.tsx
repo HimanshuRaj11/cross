@@ -40,8 +40,6 @@ export default function Home() {
   }, [])
   useEffect(() => {
     if (user) {
-      console.log(process.env.NEXT_PUBLIC_SOCKET_URI);
-
       const socket = io(`${process.env.NEXT_PUBLIC_SOCKET_URI}`)
       setSocket(socket)
       socket.emit("User", user?._id)
