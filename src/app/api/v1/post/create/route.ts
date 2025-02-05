@@ -21,7 +21,7 @@ export async function POST(request: Request) {
         const uploadResponse = await Promise.all(PostFiles?.map((file: string) =>
             cloudinary.uploader.upload(file, {
                 resource_type: "auto", // This allows uploading both images and videos
-                folder: 'Jiiwal_Posts', // Optional: Specify folder name in Cloudinary
+                folder: 'Cross_Posts', // Optional: Specify folder name in Cloudinary
             })
         ));
         console.log(uploadResponse);

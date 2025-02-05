@@ -23,7 +23,7 @@ const CreatePost: React.FC = () => {
         setCreatePostBtn(false)
     }
     const [PostData, setPostdata] = useState({
-        content: "",
+        caption: "",
         location: ""
     })
     const [loading, setLoading] = useState(false)
@@ -55,7 +55,7 @@ const CreatePost: React.FC = () => {
             setTimeout(() => setProgress(66), 2000)
             const res = await axios.post(`${baseUrl}/api/v1/post/create`, { PostFiles, PostData });
             setPostdata({
-                content: "",
+                caption: "",
                 location: ""
             })
             setFiles([])
@@ -152,10 +152,10 @@ const CreatePost: React.FC = () => {
                                     </h3>
                                     <div className="mt-2">
                                         <textarea
-                                            value={PostData.content}
+                                            value={PostData.caption}
                                             onChange={handleInputChange}
-                                            name="content"
-                                            placeholder='content..'
+                                            name="caption"
+                                            placeholder='caption..'
                                             className="min-h-[8rem] max-h-[8rem] p-2 size-96 block w-full rounded-md border-0 py-1.5 text-dark-text dark:text-light-text shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
                                     </div>

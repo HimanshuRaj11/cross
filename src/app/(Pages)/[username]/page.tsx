@@ -248,9 +248,9 @@ const ProfilePage: React.FC = () => {
                                     className="hidden"
                                     onChange={OnChangeProfile}
                                     name="files"
-                                    id="file-upload"
+                                    id="ProfilePicUpload"
                                 />
-                                <label htmlFor="file-upload" className="cursor-pointer">
+                                <label htmlFor="ProfilePicUpload" className="cursor-pointer">
                                     <span className=" cursor-pointer text-gray-500 hover:text-gray-700 flex items-center space-x-1">
                                         <FaCamera className="size-8" />
                                     </span>
