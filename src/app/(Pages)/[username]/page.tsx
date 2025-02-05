@@ -19,6 +19,9 @@ import { MdClose } from 'react-icons/md';
 import Searchbox from '@/components/Search';
 import Link from 'next/link';
 import { BiUserPlus } from 'react-icons/bi';
+import { FaCamera } from 'react-icons/fa';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
 
 
 
@@ -121,12 +124,60 @@ const ProfilePage: React.FC = () => {
     const handleClosePopOver = () => {
         setShowUserList(false)
     }
+    const [progress, setProgress] = useState(0)
+    const [loading, setLoading] = useState(false)
+    const [ProfilePic, SetProfilePic] = useState<string | null>(null);
+    const [BannerPic, SetBannerPic] = useState<string | null>(null);
+    const OnChangeProfile = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            const File = e.target.files[0];
+            const reader = new FileReader();
+            reader.readAsDataURL(File)
+            reader.onloadend = () => {
+                SetProfilePic(reader.result as string)
+            }
+        }
+
+
+    }
+    const OnChangeBanner = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            const File = e.target.files[0];
+            const reader = new FileReader();
+            reader.readAsDataURL(File)
+            reader.onloadend = () => {
+                SetBannerPic(reader.result as string)
+            }
+        }
+
+
+    }
+
+    const handleSubmitProfile = async () => {
+        try {
+            setLoading(true)
+            setTimeout(() => setProgress(66), 2000)
+            await axios.post(`${baseUrl}/api/v1/user/update/profilePic`, { ProfileImage: ProfilePic })
+
+            setProgress(100)
+            setLoading(false)
+            SetProfilePic(null)
+            return
+        } catch (error) {
+            toast.error(`${error}`, {
+                position: "top-right"
+            })
+            return error
+        }
+    }
 
     useEffect(() => {
         fetchUsername()
     }, [])
     return (
         <div className="min-h-screen bg-gray-100">
+
+            {/* Users Followers and followings */}
             {
                 ShowUserList && (
                     <div className="fixed z-50 h-full sm:h-full sm:top-0 inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center overflow-hidden" onClick={handleClosePopOver}>
@@ -156,14 +207,74 @@ const ProfilePage: React.FC = () => {
                 )
             }
 
+            {/* user details or Profile */}
+
             <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden mt-4">
+
+
                 <div className="relative">
                     <img src={PathUser?.banner ? PathUser?.banner : banner} alt="Banner" className="w-full h-48 object-cover" />
+                    {
+                        selfUser && <FaCamera className="absolute p-1 rounded-md size-8 bg-slate-500 top-2 right-2 text-white" />
+                    }
                     <img
                         src={PathUser?.profilePic ? PathUser?.profilePic : avatarUrl}
                         alt="Profile"
                         className="w-32 h-32 rounded-full border-4 border-white absolute left-1/2 transform -translate-x-1/2 -bottom-16"
                     />
+                    {
+                        ProfilePic ? (
+                            <div className="">
+                                <img
+                                    src={ProfilePic}
+                                    alt="InputProfile"
+                                    className="w-32 h-32 rounded-full border-4 border-white absolute left-1/2 transform -translate-x-1/2 -bottom-16"
+                                />
+                                <Button onClick={handleSubmitProfile}>Upload</Button>
+                            </div>
+                        ) : (
+                            <img
+                                src={PathUser?.profilePic ? PathUser?.profilePic.file : avatarUrl}
+                                alt="Profile"
+                                className="w-32 h-32 rounded-full border-4 border-white absolute left-1/2 transform -translate-x-1/2 -bottom-16"
+                            />
+                        )
+                    }
+                    {
+                        selfUser && (
+                            <div className="absolute  left-1/2 transform -translate-x-1/2 -bottom-16">
+                                <input
+                                    type="file"
+                                    className="hidden"
+                                    onChange={OnChangeProfile}
+                                    name="files"
+                                    id="file-upload"
+                                />
+                                <label htmlFor="file-upload" className="cursor-pointer">
+                                    <span className=" cursor-pointer text-gray-500 hover:text-gray-700 flex items-center space-x-1">
+                                        <FaCamera className="size-8" />
+                                    </span>
+                                </label>
+                            </div>
+                        )
+                    }
+                    {
+                        loading && <Progress value={progress} className="w-[60%]" />
+
+                    }
+
+                    {/* {
+                        ProfilePic && (
+                            <div className="">
+                                <img
+                                    src={ProfilePic}
+                                    alt="Profile"
+                                    className="w-32 h-32 rounded-full border-4 border-white absolute left-1/2 transform -translate-x-1/2 -bottom-16"
+                                />
+                                <Button onClick={handleSubmitProfile}>Upload</Button>
+                            </div>
+                        )
+                    } */}
                 </div>
                 <div className="pt-20 px-6 pb-6">
                     <div className="text-center">
@@ -263,7 +374,10 @@ const UsersList = ({ result, followed, followhandler }: { result: any, followed:
             {
                 !followed ?
                     <div className='w-auto' onClick={() => followhandler(result?._id)}>
-                        <div className=' flex flex-row justify-center items-center text-blue-500 font-semibold border-2 border-blue-500 rounded-2xl px-2 hover:text-white hover:bg-blue-500'>Follow <BiUserPlus className=' font-semibold ml-1 text-2xl' /></div>
+                        <div className=' flex flex-row justify-center items-center text-blue-500 font-semibold border-2 border-blue-500 rounded-2xl px-2 hover:text-white hover:bg-blue-500'>
+                            Follow
+                            <BiUserPlus className=' font-semibold ml-1 text-2xl' />
+                        </div>
                     </div>
                     :
                     ""

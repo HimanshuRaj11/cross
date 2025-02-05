@@ -7,8 +7,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { Fetchuser } from '@/app/Redux/slice/userSlice';
 import Image from 'next/image';
+import { MdOutlineVideoLibrary } from 'react-icons/md';
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
-
+const avatarUrl = "https://www.svgrepo.com/show/327465/person-circle.svg"
 
 
 export default function LeftSidebar() {
@@ -71,11 +72,12 @@ export default function LeftSidebar() {
         { icon: <FaSearch className='size-6' />, label: 'Search', onClick: handleSearchClick },
         { icon: <FaCompass className='size-6' />, label: 'Explore', link: "/explore" },
         { icon: <FaCog className='size-6' />, label: 'Settings', link: "/settings" },
-        { icon: <FaComments />, label: 'Chats', link: "/chats" },
+        { icon: <FaComments className='size-6' />, label: 'Chats', link: "/chats" },
         { icon: <FaBell className='size-6' />, label: 'Notification', onClick: handleNotificationClick },
         { icon: <FaPlusCircle className='size-6' />, label: 'Create', onClick: handleCreatePost },
+        { icon: <MdOutlineVideoLibrary className='size-6' />, label: 'Reel', link: 'reels' },
         ...(user ? [
-            { icon: <FaUser className='size-6' />, label: 'Account', link: `/${user?.username}` },
+            { icon: <img className="w-10 h-10 object-cover rounded-full" src={user?.profilePic?.file ? user?.profilePic?.file : avatarUrl} alt="User avatar" />, label: `${user?.name}`, link: `/${user?.username}` },
             { icon: <FaSignOutAlt className='size-6' />, label: 'Logout', onClick: handleLogout }
         ] : [
             { icon: <FaSignInAlt className='size-6' />, label: 'Login', onClick: handleLoginClick }

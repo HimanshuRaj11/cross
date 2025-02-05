@@ -18,11 +18,13 @@ export async function POST(request: Request) {
             });
         }
 
+
         // Upload an image
         const uploadResponse = await cloudinary.uploader.upload(ProfileImage, {
             resource_type: "image",
-            folder: 'Jiiwal_users_profile',
+            folder: 'cross_users_profile',
         });
+
         if (!user) return NextResponse.json({ message: "user not found!!!", error: true }, { status: 400 })
         if (uploadResponse) {
             user.profilePic = {
