@@ -206,6 +206,7 @@ const PostCard = ({ post }: { post: any }) => {
 
                         {
                             post?.files?.map((file: Ifile, index: number) => {
+                                const PostType = file.resource_type
                                 return (
                                     <CarouselItem key={index} >
                                         <div className="p-4 flex justify-center ">
@@ -214,8 +215,18 @@ const PostCard = ({ post }: { post: any }) => {
                                                     FileLength !== 1 ?
                                                         <span className='absolute rounded-md bg-gray-300 opacity-80 top-2 right-5'>{index + 1}/{FileLength}</span> : ""
                                                 }
+                                                {
+                                                    PostType == "image" ? (
 
-                                                <img onDoubleClick={() => likeOrDislikeHandler(post._id)} className="w-[100%] max-h-[30rem] object-contain rounded-lg" src={file?.url} alt={"userDetails?.username"} />
+                                                        <img onDoubleClick={() => likeOrDislikeHandler(post._id)} className="w-[100%] max-h-[30rem] object-contain rounded-lg" src={file?.url} alt={"userDetails?.username"} />
+                                                    ) : (
+                                                        <video onDoubleClick={() => likeOrDislikeHandler(post._id)} className="w-[100%] max-h-[30rem] object-contain rounded-lg" controls>
+                                                            <source src={file?.url} type="video/mp4" />
+                                                        </video>
+                                                        // <img onDoubleClick={() => likeOrDislikeHandler(post._id)} className="w-[100%] max-h-[30rem] object-contain rounded-lg" src={file?.url} alt={"userDetails?.username"} />
+                                                    )
+
+                                                }
                                             </div>
                                         </div>
                                     </CarouselItem>

@@ -6,6 +6,8 @@ import React from 'react'
 import { FaBell, FaComments, FaCompass, FaHome, FaPlusCircle, FaSearch, FaSignInAlt, FaUser } from 'react-icons/fa'
 import { MdOutlineVideoLibrary } from 'react-icons/md';
 import { useSelector } from 'react-redux';
+const avatarUrl = "https://www.svgrepo.com/show/327465/person-circle.svg"
+
 
 function TopBar() {
     const { setSearch, setPopover, setNotificationPop, setCreatePostBtn, setLoginBtn, setRegisterBtn } = useGlobalContext()
@@ -42,16 +44,16 @@ function TopBar() {
                         <div className='flex items-center space-x-2 p-2  text-white hover:bg-gray-700 rounded-md cursor-pointer transition-all duration-300 ease-in-out'>
                             <FaBell onClick={handleNotificationClick} className='size-6 text-white' />
                         </div>
-                        <Link href={"/chats"} >
-                            <div className='flex items-center space-x-2 p-2  text-white hover:bg-gray-700 rounded-md cursor-pointer transition-all duration-300 ease-in-out'>
+                        <div className='flex items-center space-x-2 p-2  text-white hover:bg-gray-700 rounded-md cursor-pointer transition-all duration-300 ease-in-out'>
+                            <Link href={"/chats"} className=''>
                                 <FaComments className='size-6 text-white' />
-                            </div>
-                        </Link>
-                        <Link href={`/${user?.username}`} >
-                            <div className='flex items-center space-x-2 p-2  text-white hover:bg-gray-700 rounded-md cursor-pointer transition-all duration-300 ease-in-out'>
-                                <FaUser className='size-6 text-white' />
-                            </div>
-                        </Link>
+                            </Link>
+                        </div>
+                        <div className='flex items-center space-x-2 p-2  text-white hover:bg-gray-700 rounded-md cursor-pointer transition-all duration-300 ease-in-out'>
+                            <Link href={`/${user?.username}`} >
+                                <img className="w-10 h-10 object-cover rounded-full" src={user?.profilePic?.file ? user?.profilePic?.file : avatarUrl} alt="User avatar" />
+                            </Link>
+                        </div>
                     </div>
                 )
                     : (

@@ -1,3 +1,4 @@
+import { timeStamp } from 'console';
 import mongoose, { Schema, model, models, Model, Document } from 'mongoose';
 
 interface IProfilePic {
@@ -34,7 +35,8 @@ export interface IUser extends Document {
     followers: mongoose.Schema.Types.ObjectId[];
     followings: mongoose.Schema.Types.ObjectId[];
     savedPost: mongoose.Schema.Types.ObjectId[];
-    createdAt: Date
+    notifications: any[];
+    createdAt: Date;
 }
 
 const countryCodes: Record<string, string> = {
@@ -146,7 +148,22 @@ const UserSchema = new Schema<IUser>({
     savedPost: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Post"
-    }]
+    }],
+    notifications: [{
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        },
+        typeOfNotification: {
+            type: String,
+            enum: ['like', 'comment', 'reply', 'follow']
+        },
+        read: { type: Boolean, default: false },
+        On: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Post"
+        },
+    }, { timeStamp: true }]
 }, { timestamps: true });
 
 const User: Model<IUser & Document> = models.User || model<IUser & Document>('User', UserSchema);

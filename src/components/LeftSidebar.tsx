@@ -77,7 +77,7 @@ export default function LeftSidebar() {
         { icon: <FaPlusCircle className='size-6' />, label: 'Create', onClick: handleCreatePost },
         { icon: <MdOutlineVideoLibrary className='size-6' />, label: 'Reel', link: 'reels' },
         ...(user ? [
-            { icon: <img className="w-10 h-10 object-cover rounded-full" src={user?.profilePic?.file ? user?.profilePic?.file : avatarUrl} alt="User avatar" />, label: `${user?.name}`, link: `/${user?.username}` },
+            { icon: <img className=" md:w-10 md:h-10 object-cover rounded-full" src={user?.profilePic?.file ? user?.profilePic?.file : avatarUrl} alt="User avatar" />, label: `${user?.name}`, link: `/${user?.username}` },
             { icon: <FaSignOutAlt className='size-6' />, label: 'Logout', onClick: handleLogout }
         ] : [
             { icon: <FaSignInAlt className='size-6' />, label: 'Login', onClick: handleLoginClick }
@@ -91,7 +91,11 @@ export default function LeftSidebar() {
                     <Link href={'/'} className='text-2xl font-bold hidden md:flex justify-center items-center flex-row '>
                         <Image src="/logo2.png" height={100} width={100} alt='CROSS' />
                     </Link>
-                    <span className='text-2xl font-bold md:hidden'><Image src="/cross1.png" height={120} width={120} alt='CROSS' /></span>
+                    <span className='text-2xl font-bold md:hidden'>
+                        <Link href={'/'}>
+                            <Image src="/cross1.png" height={120} width={120} alt='CROSS' />
+                        </Link>
+                    </span>
                 </div>
                 <div className='flex flex-col space-y-4'>
                     {menuItems.map((item, index) => (
