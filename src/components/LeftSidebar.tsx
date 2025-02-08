@@ -10,6 +10,14 @@ import Image from 'next/image';
 import { MdOutlineVideoLibrary } from 'react-icons/md';
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 const avatarUrl = "https://www.svgrepo.com/show/327465/person-circle.svg"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 
 export default function LeftSidebar() {
@@ -39,7 +47,6 @@ export default function LeftSidebar() {
         if (!user) {
             handleLoginClick()
         } else {
-
             setPopover(true)
             setCreatePostBtn(true)
             setSearch(false)
@@ -74,7 +81,9 @@ export default function LeftSidebar() {
         { icon: <FaCog className='size-6' />, label: 'Settings', link: "/settings" },
         { icon: <FaComments className='size-6' />, label: 'Chats', link: "/chats" },
         { icon: <FaBell className='size-6' />, label: 'Notification', onClick: handleNotificationClick },
-        { icon: <FaPlusCircle className='size-6' />, label: 'Create', onClick: handleCreatePost },
+        {
+            icon: <FaPlusCircle className='size-6' />, label: 'Create', onClick: handleCreatePost
+        },
         { icon: <MdOutlineVideoLibrary className='size-6' />, label: 'Reel', link: 'reels' },
         ...(user ? [
             { icon: <img className=" md:w-10 md:h-10 object-cover rounded-full" src={user?.profilePic?.file ? user?.profilePic?.file : avatarUrl} alt="User avatar" />, label: `${user?.name}`, link: `/${user?.username}` },
@@ -114,6 +123,9 @@ export default function LeftSidebar() {
                             </div>
                         )
                     ))}
+
+
+
                 </div>
             </div>
 
