@@ -45,8 +45,8 @@ export default function RootLayout({
 
             <div className="w-full min-h-screen flex flex-row">
               <ToastContainer />
-              {/* <TopBar /> */}
-              {/* <MobileBarMenu /> */}
+              <TopBar />
+              <MobileBarMenu />
 
               <div className=" bg-gray-100 flex flex-row w-full">
                 <div className="hidden sm:flex w-[8%] md:w-[22%] lg:w-[16%] h-screen bg-slate-800">

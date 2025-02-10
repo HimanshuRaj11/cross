@@ -1,6 +1,7 @@
 "use client"
 import { useGlobalContext } from '@/context/contextProvider';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import React from 'react'
 import { FaCompass, FaHome, FaPlusCircle, FaSearch } from 'react-icons/fa'
 import { MdOutlineVideoLibrary } from 'react-icons/md';
@@ -9,7 +10,7 @@ import { useSelector } from 'react-redux';
 function MobileBarMenu() {
     const { setSearch, setPopover, setNotificationPop, setCreatePostBtn, setLoginBtn, setRegisterBtn } = useGlobalContext()
     const { User: { user } } = useSelector((state: any) => state.User);
-
+    const pathname = usePathname()
     const handleSearchClick = () => {
         setPopover(true)
         setSearch(true)
@@ -47,7 +48,7 @@ function MobileBarMenu() {
         { icon: <FaPlusCircle className='size-6' />, label: 'Create', onClick: handleCreatePost },
     ]
     return (
-        <div className='sm:hidden fixed bottom-0 w-full py-3 z-40 left-0 bg-gray-800 flex justify-around items-center flex-row'>
+        <div className={`${pathname == '/reels' ? "hidden" : ""} sm:hidden fixed bottom-0 w-full py-3 z-40 left-0 bg-gray-800 flex justify-around items-center flex-row`}>
 
             {menuItems.map((item, index) => (
 

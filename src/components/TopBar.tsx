@@ -2,6 +2,7 @@
 import { useGlobalContext } from '@/context/contextProvider';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import React from 'react'
 import { FaBell, FaComments, FaCompass, FaHome, FaPlusCircle, FaSearch, FaSignInAlt, FaUser } from 'react-icons/fa'
 import { MdOutlineVideoLibrary } from 'react-icons/md';
@@ -12,6 +13,9 @@ const avatarUrl = "https://www.svgrepo.com/show/327465/person-circle.svg"
 function TopBar() {
     const { setSearch, setPopover, setNotificationPop, setCreatePostBtn, setLoginBtn, setRegisterBtn } = useGlobalContext()
     const { User: { user } } = useSelector((state: any) => state.User);
+
+    const pathname = usePathname()
+
 
 
     const handleLoginClick = () => {
@@ -32,7 +36,7 @@ function TopBar() {
     };
 
     return (
-        <div className='sm:hidden fixed top-0 w-full py-1 px-4 z-50 left-0 bg-gray-800 flex justify-between items-center flex-row'>
+        <div className={` ${pathname == '/reels' ? "hidden" : ""} sm:hidden fixed top-0 w-full py-1 px-4 z-50 left-0 bg-gray-800 flex justify-between items-center flex-row`}>
 
             <Link href={'/'} className='text-2xl font-bold flex justify-center items-center flex-row '>
                 <Image src="/logo2.png" height={100} width={100} alt='CROSS' />
