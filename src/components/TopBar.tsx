@@ -4,8 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react'
-import { FaBell, FaComments, FaCompass, FaHome, FaPlusCircle, FaSearch, FaSignInAlt, FaUser } from 'react-icons/fa'
-import { MdOutlineVideoLibrary } from 'react-icons/md';
+import { FaBell, FaComments, FaSignInAlt } from 'react-icons/fa'
 import { useSelector } from 'react-redux';
 const avatarUrl = "https://www.svgrepo.com/show/327465/person-circle.svg"
 

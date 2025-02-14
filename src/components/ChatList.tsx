@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 const avatarUrl = "https://www.svgrepo.com/show/327465/person-circle.svg"
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
-export default function ChatList({ setselectedChat }: { setselectedChat: any }) {
+export default function ChatList({ setselectedChat, setShowList, setShowChat }: { setselectedChat: any, setShowList: any, setShowChat: any }) {
     const { User: { user } } = useSelector((state: any) => state.User);
     const { socket } = useGlobalContext()
 
@@ -33,13 +33,18 @@ export default function ChatList({ setselectedChat }: { setselectedChat: any }) 
     }
     const SelectChat = async (chat_id: any) => {
         try {
-            const { data } = await axios.post(`${baseUrl}/api/v1/chat`, { chat_id })
-            if (data.success) {
+
+            const res = await axios.post(`${baseUrl}/api/v1/chat`, { chat_id })
+            if (res.data.success) {
                 socket.emit("join-room", chat_id);
-                setselectedChat(data.chat)
+                setselectedChat(res.data.chat)
+                setShowChat(true)
+                setShowList(false)
             }
             return
         } catch (error) {
+            console.log(error);
+
             return error
 
         }
@@ -49,12 +54,12 @@ export default function ChatList({ setselectedChat }: { setselectedChat: any }) 
         FetchChatList()
     }, [])
     return (
-        <div className='flex flex-col w-full overflow-y-auto h-[85%] sm:h-[88%]'>
+        <div className='flex flex-col px-2 w-full overflow-y-auto h-[85%] sm:h-[88%]'>
             {
                 ChatList?.map((chat: any, i: number) => {
                     const OtherUser = chat?.users?.filter((C_user: any) => C_user?._id !== user?._id)?.[0] || {};
                     return (
-                        <div key={i} onClick={() => SelectChat(chat?._id)} className="relative p-2 my-2 bg-gray-200 cursor-pointer flex items-center rounded-lg">
+                        <div key={i} onClick={() => SelectChat(chat?._id)} className="relative  p-2 my-2 bg-gray-200 cursor-pointer flex items-center rounded-lg">
                             <div className="mr-1 w-10">
                                 <img className="w-10 h-10 object-cover rounded-full" src={OtherUser.profilePic?.file ? OtherUser.profilePic?.file : avatarUrl} alt="User avatar" />
                             </div>

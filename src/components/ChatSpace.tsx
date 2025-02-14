@@ -4,12 +4,12 @@ import axios from 'axios'
 import moment from 'moment'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
-import { FaEllipsisV, FaMicrophone, FaPaperclip, FaPaperPlane, FaPhone, FaSmile, FaUser, FaVideo } from 'react-icons/fa'
+import { FaArrowLeft, FaEllipsisV, FaMicrophone, FaPaperclip, FaPaperPlane, FaPhone, FaSmile, FaUser, FaVideo } from 'react-icons/fa'
 import { useSelector } from 'react-redux'
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 const avatarUrl = "https://www.svgrepo.com/show/327465/person-circle.svg"
 
-export default function ChatSpace({ selectedChat }: { selectedChat: any }) {
+export default function ChatSpace({ selectedChat, setShowList, setShowChat }: { selectedChat: any, setShowList: any, setShowChat: any }) {
     const { User: { user } } = useSelector((state: any) => state.User);
     const OtherUser = selectedChat?.users?.filter((C_user: any) => C_user._id !== user._id)?.[0] || {};
     const { socket } = useGlobalContext()
@@ -60,12 +60,17 @@ export default function ChatSpace({ selectedChat }: { selectedChat: any }) {
         };
     }, [])
 
+    const handleChatBack = () => {
+        setShowList(true)
+        setShowChat(false)
+    }
 
     return (
         <div className="w-full h-full  md:h-screen flex flex-col">
 
             <div className="flex items-center justify-between p-4 bg-white border-b border-gray-300">
                 <div className="flex items-center">
+                    <FaArrowLeft className='md:hidden  p-2 mr-3 text-4xl cursor-pointer' onClick={handleChatBack} />
                     <Link href={OtherUser?.username}>
                         <img className="w-10 h-10 object-cover rounded-full" src={OtherUser.profilePic?.file ? OtherUser.profilePic?.file : avatarUrl} alt="User avatar" />
                     </Link>
