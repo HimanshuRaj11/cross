@@ -31,10 +31,13 @@ function Login() {
         password: ""
     })
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
         const { name, value } = e.target;
         setLoginData((preVal) => {
             return { ...preVal, [name]: value };
         });
+
+
     }
 
     const handleSubmit = async () => {

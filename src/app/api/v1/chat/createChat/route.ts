@@ -9,7 +9,6 @@ export async function POST(request: Request) {
         if (!user_id) return
         const { OtherUser } = await request.json();
         if (!OtherUser) return NextResponse.json({ message: "Somthing went wrong!", error: true }, { status: 500 })
-        console.log(OtherUser);
 
         const chat = await Chat.findOne({ users: { $all: [user_id, OtherUser] } });
 
@@ -19,7 +18,6 @@ export async function POST(request: Request) {
             }, { returnDocument: "after" })
             return NextResponse.json({ message: "", chat, success: true }, { status: 200 })
         }
-
         return NextResponse.json({ message: "", chat, success: true }, { status: 200 })
 
     } catch (error) {
