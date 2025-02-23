@@ -1,6 +1,6 @@
 "use client"
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FaHome, FaSearch, FaCompass, FaCog, FaComments, FaBell, FaUser, FaSignInAlt, FaSignOutAlt, FaPlusCircle } from 'react-icons/fa';
 import { useGlobalContext } from '@/context/contextProvider';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,16 +8,9 @@ import axios from 'axios';
 import { Fetchuser } from '@/app/Redux/slice/userSlice';
 import Image from 'next/image';
 import { MdOutlineVideoLibrary } from 'react-icons/md';
+import { fetchPost } from '@/app/Redux/slice/PostSlice';
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 const avatarUrl = "https://www.svgrepo.com/show/327465/person-circle.svg"
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 
 
 export default function LeftSidebar() {
@@ -92,6 +85,10 @@ export default function LeftSidebar() {
             { icon: <FaSignInAlt className='size-6' />, label: 'Login', onClick: handleLoginClick }
         ])
     ];
+
+    useEffect(() => {
+        dispatch(fetchPost() as any)
+    }, [])
 
     return (
         <div className='hidden sm:flex flex-col fixed top-0 left-0 h-full w-[8%] md:w-[22%] lg:w-[16%] bg-gray-800 text-white transition-all duration-300 ease-in-out'>

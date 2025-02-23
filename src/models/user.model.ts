@@ -1,4 +1,3 @@
-import { timeStamp } from 'console';
 import mongoose, { Schema, model, models, Model, Document } from 'mongoose';
 
 interface IProfilePic {
@@ -34,6 +33,7 @@ export interface IUser extends Document {
     banner?: IProfilePic;
     followers: mongoose.Schema.Types.ObjectId[];
     followings: mongoose.Schema.Types.ObjectId[];
+    reels: mongoose.Schema.Types.ObjectId[];
     savedPost: mongoose.Schema.Types.ObjectId[];
     notifications: any[];
     createdAt: Date;
@@ -148,6 +148,10 @@ const UserSchema = new Schema<IUser>({
     savedPost: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Post"
+    }],
+    reels: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Reel"
     }],
     notifications: [{
         user: {

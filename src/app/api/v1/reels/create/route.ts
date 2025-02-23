@@ -1,7 +1,7 @@
 import cloudinary from "@/lib/cloudinary";
 import { InternalServerError } from "@/lib/handleError";
 import { verifyUser } from "@/lib/verifyuser";
-import Post from "@/models/post.model";
+import Reel from "@/models/reels.model";
 import User from "@/models/user.model";
 import { NextResponse } from "next/server";
 
@@ -20,15 +20,15 @@ export async function POST(request: Request) {
 
         const uploadResponse = await Promise.all(PostFiles?.map((file: string) =>
             cloudinary.uploader.upload(file, {
-                resource_type: "video", // This allows uploading both images and videos
-                folder: 'Cross_Reels', // Optional: Specify folder name in Cloudinary
+                resource_type: "video",
+                folder: 'Cross_Reels',
             })
         ));
         console.log(uploadResponse);
 
 
 
-        const newPost = await Post.create({
+        const newReel = await Reel.create({
             user: user_Id,
             files: uploadResponse,
             caption,
@@ -39,7 +39,7 @@ export async function POST(request: Request) {
 
         await User.findOneAndUpdate(
             { _id: user_Id },
-            { $push: { posts: (newPost)._id } }
+            { $push: { reels: (newReel)._id } }
         );
 
         return NextResponse.json({ message: "Post Created Successful", success: true }, { status: 201 })
