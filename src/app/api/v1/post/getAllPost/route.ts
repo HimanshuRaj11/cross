@@ -13,6 +13,7 @@ export async function GET() {
             })
         return NextResponse.json({ message: "Post Fetched", posts })
     } catch (error) {
+
         return NextResponse.json(InternalServerError(error as Error))
 
     }

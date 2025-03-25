@@ -30,9 +30,9 @@ const RightSidebar = () => {
             return
         }
     }
-    useEffect(() => {
-        fetchSuggestUser()
-    }, [])
+    // useEffect(() => {
+    //     fetchSuggestUser()
+    // }, [])
     return (
         <div className="hidden lg:w-[30%] lg:block w-full p-4 min-h-screen transition-all duration-300 ease-in-out">
 
