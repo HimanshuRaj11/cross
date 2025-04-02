@@ -43,7 +43,7 @@ function TopBar() {
 
             {
                 user ? (
-                    <div className="flex flex-row w-[30%] justify-evenly">
+                    <div className="flex flex-row  justify-evenly">
                         <div className='flex items-center space-x-2 p-2  text-white hover:bg-gray-700 rounded-md cursor-pointer transition-all duration-300 ease-in-out'>
                             <FaBell onClick={handleNotificationClick} className='size-6 text-white' />
                         </div>
@@ -52,9 +52,9 @@ function TopBar() {
                                 <FaComments className='size-6 text-white' />
                             </Link>
                         </div>
-                        <div className='flex items-center space-x-2 p-2  text-white hover:bg-gray-700 rounded-md cursor-pointer transition-all duration-300 ease-in-out'>
+                        <div className='flex items-center space-x-2 p-2 text-white hover:bg-gray-700 rounded-md cursor-pointer transition-all duration-300 ease-in-out'>
                             <Link href={`/${user?.username}`} >
-                                <img className="w-10 h-10 object-cover rounded-full" src={user?.profilePic?.file ? user?.profilePic?.file : avatarUrl} alt="User avatar" />
+                                <img className="size-10 object-cover rounded-full" src={user?.profilePic?.file ? user?.profilePic?.file : avatarUrl} alt="User avatar" />
                             </Link>
                         </div>
                     </div>
