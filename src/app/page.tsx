@@ -35,6 +35,7 @@ export default function Home() {
   const { socket, setSocket } = useGlobalContext()
 
   useEffect(() => {
+
     dispatch(fetchPost() as any)
 
   }, [])
