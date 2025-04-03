@@ -6,7 +6,6 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
     try {
-        await connectDB()
         const user_id = await verifyUser()
         if (!user_id) return
         const user = await User.findOne({ _id: user_id }).select('-password')

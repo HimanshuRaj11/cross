@@ -43,9 +43,9 @@ const CreatePost: React.FC = () => {
         })
     }
 
-    const [tag, setTage] = useState("")
+    const [tag, setTag] = useState("")
     const handleTagChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setTage(e.target.value)
+        setTag(e.target.value)
     }
 
     const handelTagSubmit = () => {
@@ -53,10 +53,10 @@ const CreatePost: React.FC = () => {
             ...preVal,
             tags: [...preVal.tags, tag]
         }))
-        setTage("")
+        setTag("")
     }
-    const RemoveTag = () => {
-
+    const RemoveTag = (tagToRemove: string) => {
+        setPostdata({ ...PostData, tags: PostData.tags.filter(tag => tag !== tagToRemove) });
     }
     const [PostFiles, setFiles] = useState<string[]>([]);
     const OnchangeFileHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -224,7 +224,7 @@ const CreatePost: React.FC = () => {
                                                             onChange={handleTagChange}
                                                             type='text'
                                                             name="tag"
-                                                            placeholder='Location'
+                                                            placeholder='#tag'
                                                             className=" p-2 block w-full rounded-md border-0 py-1.5 text-dark-text dark:text-light-text shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                                         />
                                                     </div>
@@ -236,7 +236,7 @@ const CreatePost: React.FC = () => {
                                                             return (
                                                                 <div key={i} className='flex m-1 w-fit items-center justify-center border rounded-md text-black bg-gray-100 px-2 py-1 mr-2'>
                                                                     <span className="pr-2">{tag}</span>
-                                                                    <FaTimes className="text-red-500 cursor-pointer hover:text-red-700" />
+                                                                    <FaTimes onClick={() => RemoveTag(tag)} className="text-red-500 cursor-pointer hover:text-red-700" />
                                                                 </div>
                                                             )
                                                         })

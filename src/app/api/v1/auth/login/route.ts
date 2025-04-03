@@ -16,7 +16,7 @@ interface ITokenData {
 
 export async function POST(request: Request) {
     try {
-        await connectDB()
+        // await connectDB()
         const { LoginData }: { LoginData: IloginData } = await request.json();
         const { username, password } = LoginData;
         const UserSearchQuery = {

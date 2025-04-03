@@ -26,6 +26,8 @@ export interface IStory {
     user: Schema.Types.ObjectId;
     files?: Ifile[];
     createdAt: Date | string;
+    readBy: Schema.Types.ObjectId[];
+    likedBy: Schema.Types.ObjectId[];
 }
 
 const StoriesSchema = new Schema({
@@ -38,7 +40,13 @@ const StoriesSchema = new Schema({
     readBy: [{
         type: Schema.Types.ObjectId,
         ref: "User",
+    }, { timestamps: true }],
+
+    likedBy: [{
+        type: Schema.Types.ObjectId,
+        ref: "User",
     }, { timestamps: true }]
+
 }, { timestamps: true })
 
 const Story: Model<IStory & Document> = models.Story || model("Story", StoriesSchema)

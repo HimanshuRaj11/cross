@@ -24,8 +24,6 @@ export async function POST(request: Request) {
                 folder: 'Cross_Posts', // Optional: Specify folder name in Cloudinary
             })
         ));
-        console.log(uploadResponse);
-
 
 
         const newPost = await Post.create({
