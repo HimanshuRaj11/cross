@@ -1,4 +1,5 @@
 import cloudinary from "@/lib/cloudinary";
+import connectDB from "@/lib/db";
 import { InternalServerError } from "@/lib/handleError";
 import { verifyUser } from "@/lib/verifyuser";
 import Post from "@/models/post.model";
@@ -8,6 +9,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
     try {
+        await connectDB()
         const user_Id = await verifyUser();
         if (!user_Id) return NextResponse.json({ message: "User Not found" }, { status: 404 })
 
