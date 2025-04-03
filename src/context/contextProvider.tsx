@@ -5,6 +5,8 @@ import React, { createContext, useState, useContext } from "react";
 interface GlobalContextType {
     createPostbtn: boolean;
     setCreatePostBtn: React.Dispatch<React.SetStateAction<boolean>>;
+    Loading: boolean;
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>;
     Loginbtn: boolean;
     setLoginBtn: React.Dispatch<React.SetStateAction<boolean>>;
     Registerbtn: boolean;
@@ -24,6 +26,8 @@ interface GlobalContextType {
 const GlobalContext = createContext<GlobalContextType>({
     createPostbtn: false,
     setCreatePostBtn: () => { },
+    Loading: false,
+    setLoading: () => { },
     Loginbtn: false,
     setLoginBtn: () => { },
     Registerbtn: false,
@@ -43,6 +47,7 @@ const GlobalContext = createContext<GlobalContextType>({
 
 export const GlobalContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [createPostbtn, setCreatePostBtn] = useState(false);
+    const [Loading, setLoading] = useState(false)
     const [Loginbtn, setLoginBtn] = useState(false);
     const [Registerbtn, setRegisterBtn] = useState(false);
     const [showAuth, setShowAuth] = useState(false);
@@ -54,6 +59,7 @@ export const GlobalContextProvider: React.FC<{ children: React.ReactNode }> = ({
     return (
         <GlobalContext.Provider value={{
             Popover, setPopover,
+            Loading, setLoading,
             createPostbtn, setCreatePostBtn,
             Loginbtn, setLoginBtn,
             Registerbtn, setRegisterBtn,

@@ -10,6 +10,7 @@ import FetchuserDetails from "@/components/Fetchuser";
 import { ToastContainer } from 'react-toastify';
 import MobileBarMenu from "@/components/MobileBarMenu";
 import TopBar from "@/components/TopBar";
+import Preloader from "@/components/loader/loader";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -45,6 +46,7 @@ export default function RootLayout({
 
             <div className="w-full min-h-screen flex flex-row">
               <ToastContainer />
+              <Preloader />
               <TopBar />
               <MobileBarMenu />
 
