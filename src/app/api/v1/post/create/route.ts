@@ -9,6 +9,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
     try {
+        await connectDB()
         const user_Id = await verifyUser();
         if (!user_Id) return NextResponse.json({ message: "User Not found" }, { status: 404 })
 
